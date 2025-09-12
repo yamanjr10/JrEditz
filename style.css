@@ -734,3 +734,51 @@
          display: block;
      }
  }
+
+ /* Video Badges */
+ .video-badge {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     padding: 5px 10px;
+     border-radius: 20px;
+     font-size: 0.7rem;
+     font-weight: 700;
+     text-transform: uppercase;
+     letter-spacing: 0.5px;
+     z-index: 3;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+ }
+
+ /* Specific badge styles */
+ .video-badge.trending {
+     background: linear-gradient(45deg, #ff2a6d, #ff5e9a);
+     color: white;
+ }
+
+ .video-badge.popular {
+     background: linear-gradient(45deg, #9b59b6, #8e44ad);
+     color: white;
+
+ }
+
+ .video-badge.new {
+     background: linear-gradient(45deg, #00a2ff, #55fff1);
+     color: var(--dark);
+ }
+
+ .video-badge.up-coming {
+     background: linear-gradient(45deg, #6fff7b, #32d96c);
+     color: var(--dark);
+ }
+
+ .video-badge.hot {
+     background: linear-gradient(45deg, #e74c3c, #c0392b);
+     color: white;
+ }
+
+ .video-badge.out-now {
+     background: linear-gradient(45deg, #f39c12, #f1c40f);
+     color: var(--dark);
+
+ }
