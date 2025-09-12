@@ -3,7 +3,7 @@ const tutorials = [
     {
         title: "Advance Clone in Capcut Tutorial | clone Tutorial in Capcut",
         thumbnail: "img/Advance Clone in Capcut Tutorial  clone Tutorial in Capcut.jpg",
-        link: "#",
+        link: "https://youtu.be/DNW2NPeVwjU?si=9g3N3WJj9c5Df3-R",
         duration: "8 min",
         date: "13 Sep 2025",
         badge: "up coming",
@@ -185,4 +185,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 
