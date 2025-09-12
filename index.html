@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jreditz - Anime Video Editing Tutorials</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Oxanium:wght@400;600;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Oxanium:wght@400;600;800&display=swap"rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
     <!-- Header & Navigation -->
     <header>
         <div class="container header-content">
@@ -24,8 +22,8 @@
                 <a href="#home">Home</a>
                 <a href="#tutorials">Tutorials</a>
                 <a href="#resources">Resources</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
+                <a href="#" data-modal="aboutModal">About</a>
+                <a href="#" data-modal="contactModal">Contact</a>
                 <a href="https://www.youtube.com/@jreditz100" class="btn btn-primary"
                     style="padding: 10px 20px; font-size: 0.9rem;"><i class="fas fa-sign-in-alt"></i> Subscribe</a>
             </nav>
@@ -43,8 +41,8 @@
             <a href="#home">Home</a>
             <a href="#tutorials">Tutorials</a>
             <a href="#resources">Resources</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="#" data-modal="aboutModal">About</a>
+            <a href="#" data-modal="contactModal">Contact</a>
             <a href="https://www.youtube.com/@jreditz100" class="btn btn-primary"
                 style="padding: 10px 20px; font-size: 0.9rem;"><i class="fas fa-sign-in-alt"></i> Subscribe</a>
         </nav>
@@ -133,6 +131,33 @@
         </div>
     </section>
 
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <span class="close" data-close="aboutModal">&times;</span>
+            <h2>About <span>Jreditz</span></h2>
+            <p>
+                Jreditz is dedicated to teaching anime video editing, manga panel animation,
+                and creative VFX for beginners and pros.
+                With step-by-step tutorials and free resources, we help editors bring their ideas to life.
+            </p>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="close" data-close="contactModal">&times;</span>
+            <h2>Contact <span>Me</span></h2>
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -153,8 +178,8 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#tutorials">Tutorials</a></li>
                         <li><a href="#resources">Resources</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#" data-modal="aboutModal">About</a></li>
+                        <li><a href="#contact" data-modal="contactModal">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-container">
@@ -179,5 +204,4 @@
     <script src="index.js"></script>
 
 </body>
-
 </html>

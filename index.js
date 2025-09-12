@@ -27,7 +27,6 @@ let tutorialsHTML = `
 `;
 
 tutorials.forEach(tutorial => {
-    // Add badge HTML if badge exists
     const badgeHTML = tutorial.badge ? `<div class="video-badge ${tutorial.badge.replace(' ', '-')}">${tutorial.badge}</div>` : '';
 
     tutorialsHTML += `
@@ -107,7 +106,6 @@ const mobileNav = document.getElementById('mobileNav');
 const overlay = document.getElementById('overlay');
 const body = document.body;
 
-// Toggle mobile navigation
 function toggleMobileNav() {
     hamburger.classList.toggle('active');
     mobileNav.classList.toggle('active');
@@ -115,23 +113,75 @@ function toggleMobileNav() {
     body.style.overflow = body.style.overflow === 'hidden' ? '' : 'hidden';
 }
 
-// Event listeners
 hamburger.addEventListener('click', toggleMobileNav);
 overlay.addEventListener('click', toggleMobileNav);
 
-// Close mobile nav when clicking on links
 const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 mobileNavLinks.forEach(link => {
     link.addEventListener('click', toggleMobileNav);
 });
 
-// Handle window resize
 window.addEventListener('resize', function () {
     if (window.innerWidth > 968) {
-        // If window is resized to desktop size, close mobile nav
         hamburger.classList.remove('active');
         mobileNav.classList.remove('active');
         overlay.classList.remove('active');
         body.style.overflow = '';
     }
+});
+
+// Modal functionality
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    if (window.location.hash) {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    }
+
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    const openers = document.querySelectorAll('[data-modal]');
+    openers.forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = el.dataset.modal;
+            if (target) openModal(target);
+            history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        });
+    });
+
+    document.querySelectorAll('.close').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.close;
+            closeModal(id);
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target.classList && e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal').forEach(m => {
+                if (m.style.display === 'flex') {
+                    m.style.display = 'none';
+                }
+            });
+            document.body.style.overflow = '';
+        }
+    });
 });
