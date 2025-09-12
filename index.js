@@ -5,7 +5,7 @@ const tutorials = [
         thumbnail: "img/Advance Clone in Capcut Tutorial  clone Tutorial in Capcut.jpg",
         link: "#",
         duration: "8 min",
-        date: "Up Coming",
+        date: "13 Sep 2025",
         badge: "up coming",
     },
     {
@@ -185,3 +185,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
