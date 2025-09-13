@@ -1,12 +1,20 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "How to make Aura in Capcut | Aura in Capcut Tutorial",
+        thumbnail: "img/How to make Aura in Capcut  Aura in Capcut Tutorial.jpg",
+        link: "#",
+        duration: "4 min",
+        date: "Coming Soon",
+        badge: "up coming",
+    },
+    {
         title: "Advance Clone in Capcut Tutorial | clone Tutorial in Capcut",
         thumbnail: "img/Advance Clone in Capcut Tutorial  clone Tutorial in Capcut.jpg",
         link: "https://youtu.be/DNW2NPeVwjU?si=9g3N3WJj9c5Df3-R",
         duration: "8 min",
         date: "13 Sep 2025",
-        badge: "up coming",
+        badge: "out now",
     },
     {
         title: "Shrine Null Capcut Tutorial | Null Tutorial in Capcut",
@@ -14,7 +22,7 @@ const tutorials = [
         link: "https://youtu.be/QZc67CgrL2M?si=e55jQ1xQpIA3pV2K",
         duration: "5 min",
         date: "12 Sep 2025",
-        badge: "out now",
+        badge: "new",
     },
 ];
 
@@ -185,5 +193,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-
