@@ -249,12 +249,33 @@
      padding: 100px 0;
  }
 
- .video-container {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-     gap: 25px;
-     margin-top: 50px;
- }
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+/* For mobile devices */
+@media (max-width: 768px) {
+    .video-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* For tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .video-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For desktops */
+@media (min-width: 1025px) {
+    .video-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
  .video-card {
      background: var(--gray);
@@ -325,6 +346,48 @@
      color: var(--secondary);
      font-size: 0.9rem;
  }
+
+ /* Pagination */
+ .pagination-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 10px;
+}
+
+.pagination-btn {
+    padding: 8px 15px;
+    background: var(--gray);
+    color: var(--light);
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.pagination-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-btn.disabled:hover {
+    background: var(--gray);
+    color: var(--light);
+}
 
  /* Resources Section */
  .resources {

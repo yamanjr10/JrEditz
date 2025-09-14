@@ -1,12 +1,20 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "How to make Doted glitch effect in Capcut | glitch effect in Capcut Tutorial",
+        thumbnail: "img/How to make Doted glitch effect in Capcut glitch effect in Capcut Tutorial.jpg",
+        link: "https://youtu.be/1v1Yk3eXG7A?si=ZKXH1gk2b0mJHjvV",
+        duration: "4 min",
+        date: "16 Sep 2025",
+        badge: "up coming",   
+    },
+    {
         title: "How to make Aura in Capcut | Aura in Capcut Tutorial",
         thumbnail: "img/How to make Aura in Capcut  Aura in Capcut Tutorial.jpg",
-        link: "#",
+        link: "https://youtu.be/SUpB3rgz9A0?si=AhCbl-hi-Q7YNmyL",
         duration: "4 min",
-        date: "Coming Soon",
-        badge: "up coming",
+        date: "15 Sep 2025",
+        badge: "out now",
     },
     {
         title: "Advance Clone in Capcut Tutorial | clone Tutorial in Capcut",
@@ -14,7 +22,7 @@ const tutorials = [
         link: "https://youtu.be/DNW2NPeVwjU?si=9g3N3WJj9c5Df3-R",
         duration: "8 min",
         date: "13 Sep 2025",
-        badge: "out now",
+        badge: "new",
     },
     {
         title: "Shrine Null Capcut Tutorial | Null Tutorial in Capcut",
@@ -22,45 +30,108 @@ const tutorials = [
         link: "https://youtu.be/QZc67CgrL2M?si=e55jQ1xQpIA3pV2K",
         duration: "5 min",
         date: "12 Sep 2025",
-        badge: "new",
+        badge: "popular",
     },
 ];
 
-// Generate Tutorials Section
+// Pagination variables
+const tutorialsPerPage = 6;
+let currentPage = 1;
+
+// Generate Tutorials Section with pagination
 const tutorialsContainer = document.getElementById("tutorials-container");
+const paginationContainer = document.getElementById("pagination");
 
-let tutorialsHTML = `
-  <h2 class="section-title">Latest <span>Tutorials</span></h2>
-  <div class="video-container">
-`;
+function displayTutorials(page) {
+    const startIndex = (page - 1) * tutorialsPerPage;
+    const endIndex = startIndex + tutorialsPerPage;
+    const paginatedTutorials = tutorials.slice(startIndex, endIndex);
+    
+    let tutorialsHTML = `
+        <h2 class="section-title">Latest <span>Tutorials</span></h2>
+        <div class="video-container">
+    `;
 
-tutorials.forEach(tutorial => {
-    const badgeHTML = tutorial.badge ? `<div class="video-badge ${tutorial.badge.replace(' ', '-')}">${tutorial.badge}</div>` : '';
+    paginatedTutorials.forEach(tutorial => {
+        const badgeHTML = tutorial.badge ? `<div class="video-badge ${tutorial.badge.replace(' ', '-')}">${tutorial.badge}</div>` : '';
 
-    tutorialsHTML += `
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="${tutorial.thumbnail}" alt="${tutorial.title}" loading="lazy">
-        ${badgeHTML}
-        <div class="play-btn">
-          <a href="${tutorial.link}" target="_blank" style="color: white;">
-            <i class="fas fa-play"></i>
-          </a>
+        tutorialsHTML += `
+        <div class="video-card">
+            <div class="video-thumb">
+                <img src="${tutorial.thumbnail}" alt="${tutorial.title}" loading="lazy">
+                ${badgeHTML}
+                <div class="play-btn">
+                    <a href="${tutorial.link}" target="_blank" style="color: white;">
+                        <i class="fas fa-play"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="video-info">
+                <h3 class="video-title">${tutorial.title}</h3>
+                <div class="video-meta">
+                    <span><i class="far fa-clock"></i> ${tutorial.duration}</span>
+                    <span>${tutorial.date}</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="video-info">
-        <h3 class="video-title">${tutorial.title}</h3>
-        <div class="video-meta">
-          <span><i class="far fa-clock"></i> ${tutorial.duration}</span>
-          <span>${tutorial.date}</span>
-        </div>
-      </div>
-    </div>
-  `;
-});
+        `;
+    });
 
-tutorialsHTML += `</div>`;
-tutorialsContainer.innerHTML = tutorialsHTML;
+    tutorialsHTML += `</div>`;
+    tutorialsContainer.innerHTML = tutorialsHTML;
+    
+    // Update pagination buttons
+    updatePagination();
+}
+
+function updatePagination() {
+    const totalPages = Math.ceil(tutorials.length / tutorialsPerPage);
+    let paginationHTML = '';
+    
+    // Previous button
+    paginationHTML += `
+        <button class="pagination-btn ${currentPage === 1 ? 'disabled' : ''}" 
+                onclick="changePage(${currentPage - 1})" 
+                ${currentPage === 1 ? 'disabled' : ''}>
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    `;
+    
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+            <button class="pagination-btn ${currentPage === i ? 'active' : ''}" 
+                    onclick="changePage(${i})">
+                ${i}
+            </button>
+        `;
+    }
+    
+    // Next button
+    paginationHTML += `
+        <button class="pagination-btn ${currentPage === totalPages ? 'disabled' : ''}" 
+                onclick="changePage(${currentPage + 1})" 
+                ${currentPage === totalPages ? 'disabled' : ''}>
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    `;
+    
+    paginationContainer.innerHTML = paginationHTML;
+}
+
+function changePage(page) {
+    const totalPages = Math.ceil(tutorials.length / tutorialsPerPage);
+    if (page < 1 || page > totalPages) return;
+    
+    currentPage = page;
+    displayTutorials(currentPage);
+    // Scroll to tutorials section
+    document.getElementById('tutorials').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Initialize tutorials display
+displayTutorials(currentPage);
+
 
 // Back to Top Button Functionality
 const backToTop = document.getElementById("backToTop");
