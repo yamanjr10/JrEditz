@@ -3,7 +3,7 @@ const tutorials = [
     {
         title: "How to make Doted glitch effect in Capcut | glitch effect in Capcut Tutorial",
         thumbnail: "img/How to make Doted glitch effect in Capcut glitch effect in Capcut Tutorial.jpg",
-        link: "https://youtu.be/1v1Yk3eXG7A?si=ZKXH1gk2b0mJHjvV",
+        link: "https://youtu.be/a0EkP5bYq5g?si=Hg0DzDoWEaAWoapz",
         duration: "4 min",
         date: "16 Sep 2025",
         badge: "up coming",   
@@ -263,4 +263,118 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         }
     });
+});
+
+// Smooth scrolling without hash in URL
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                
+                // Close mobile nav if open
+                if (mobileNav.classList.contains('active')) {
+                    toggleMobileNav();
+                }
+                
+                // Scroll to the element
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Update URL without hash using History API
+                const cleanUrl = window.location.origin + window.location.pathname;
+                history.replaceState(null, null, cleanUrl);
+            }
+        });
+    });
+}
+
+// Call this function when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    setupSmoothScroll();
+    
+    // Remove any existing hash on page load
+    if (window.location.hash) {
+        const cleanUrl = window.location.origin + window.location.pathname;
+        history.replaceState(null, null, cleanUrl);
+    }
+});
+
+// Smooth scrolling with data attributes
+function setupSmoothScroll() {
+    // Handle desktop navigation
+    document.querySelectorAll('.nav-links [data-scroll]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            scrollToSection(this.getAttribute('data-scroll'));
+        });
+    });
+    
+    // Handle mobile navigation
+    document.querySelectorAll('.mobile-nav-links [data-scroll]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            scrollToSection(this.getAttribute('data-scroll'));
+        });
+    });
+}
+
+function scrollToSection(sectionId) {
+    const targetElement = document.getElementById(sectionId);
+    
+    if (targetElement) {
+        // Close mobile nav if open
+        if (mobileNav.classList.contains('active')) {
+            toggleMobileNav();
+        }
+        
+        // Scroll to the element
+        targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// Call this function when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    setupSmoothScroll();
+});
+
+// Highlight active navigation based on scroll position
+function setActiveNav() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a, .mobile-nav-links a');
+    let currentSection = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (window.scrollY >= sectionTop - 100 && 
+            window.scrollY < sectionTop + sectionHeight - 100) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-scroll') === currentSection) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Add scroll event listener
+window.addEventListener('scroll', setActiveNav);
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', function() {
+    setActiveNav();
 });
