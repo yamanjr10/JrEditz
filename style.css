@@ -335,7 +335,7 @@
  }
 
  .video-title {
-     font-size: 1.2rem;
+     font-size: 0.9rem;
      margin-bottom: 10px;
      color: var(--light);
  }
@@ -909,5 +909,6 @@
      color: var(--dark);
 
  }
+
 
  
