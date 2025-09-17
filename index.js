@@ -6,7 +6,7 @@ const tutorials = [
         link: "https://youtu.be/p2jnyNONlSc?si=0cJAskRTXQR1nkuF",
         duration: "8 min",
         date: "18 Sep 2025",
-        badge: "up coming",   
+        badge: "out now",   
     },
     {
         title: "How to make Doted glitch effect in Capcut | glitch effect in Capcut Tutorial",
@@ -497,4 +497,5 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         scheduleContainer.innerHTML = `<p style="text-align:center;">No schedule available for this month.</p>`;
     }
+
 });
