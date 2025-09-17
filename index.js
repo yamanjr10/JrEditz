@@ -6,7 +6,7 @@ const tutorials = [
         link: "https://youtu.be/a0EkP5bYq5g?si=Hg0DzDoWEaAWoapz",
         duration: "4 min",
         date: "16 Sep 2025",
-        badge: "out now",   
+        badge: "new",   
     },
     {
         title: "How to make Aura in Capcut | Aura in Capcut Tutorial",
@@ -14,7 +14,7 @@ const tutorials = [
         link: "https://youtu.be/SUpB3rgz9A0?si=AhCbl-hi-Q7YNmyL",
         duration: "4 min",
         date: "15 Sep 2025",
-        badge: "new",
+        badge: "popular",
     },
     {
         title: "Advance Clone in Capcut Tutorial | clone Tutorial in Capcut",
@@ -29,7 +29,6 @@ const tutorials = [
         link: "https://youtu.be/QZc67CgrL2M?si=e55jQ1xQpIA3pV2K",
         duration: "5 min",
         date: "12 Sep 2025",
-        badge: "popular",
     },
 ];
 
