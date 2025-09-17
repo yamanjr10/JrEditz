@@ -3,9 +3,9 @@ const tutorials = [
     {
         title: "Advance Clone in Capcut Tutorial (P2) | clone Tutorial in Capcut",
         thumbnail: "img/Advance Clone in Capcut Tutorial ( P 2 ) clone Tutorial in Capcut.jpg",
-        link: "",
+        link: "https://youtu.be/p2jnyNONlSc?si=0cJAskRTXQR1nkuF",
         duration: "8 min",
-        date: "Coming Soon",
+        date: "18 Sep 2025",
         badge: "up coming",   
     },
     {
@@ -383,4 +383,118 @@ window.addEventListener('scroll', setActiveNav);
 // Call on page load
 document.addEventListener('DOMContentLoaded', function() {
     setActiveNav();
+});
+// ------- Enhanced Schedule Calendar Generation -------
+document.addEventListener("DOMContentLoaded", () => {
+    const scheduleContainer = document.querySelector("#scheduleModal .calendar");
+    const year = 2025;
+    const startDate = new Date(year, 8, 12); // Sept 12, 2025
+    const cycle = ['upload', 'upload', 'break'];
+    const longBreakStart = new Date(year, 8, 21);
+    const longBreakEnd = new Date(year, 8, 26);
+    const today = new Date();
+    
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    function calculateCycleIndex(date) {
+        let index = 0;
+        let current = new Date(startDate);
+        while (current < date) {
+            if (!(current >= longBreakStart && current <= longBreakEnd)) {
+                index++;
+            }
+            current.setDate(current.getDate() + 1);
+        }
+        return index % cycle.length;
+    }
+
+    function generateMonthCalendar(year, month) {
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+
+        let html = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th>
+                        <th>Thu</th><th>Fri</th><th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+        let day = 1;
+        let dayOfWeek = firstDay;
+
+        for (let week = 0; week < 6; week++) {
+            html += "<tr>";
+            for (let dow = 0; dow < 7; dow++) {
+                if ((week === 0 && dow < firstDay) || day > daysInMonth) {
+                    html += `<td class="empty"></td>`;
+                } else {
+                    let cellClass = "";
+                    let content = `<span class="day-number">${day}</span>`;
+                    let currentDay = new Date(year, month, day);
+
+                    // Check if today
+                    if (
+                        currentDay.getFullYear() === today.getFullYear() &&
+                        currentDay.getMonth() === today.getMonth() &&
+                        currentDay.getDate() === today.getDate()
+                    ) {
+                        cellClass = "today";
+                    }
+
+                    // Add event if after start date
+                    if (currentDay >= startDate) {
+                        let cycleIndex = calculateCycleIndex(currentDay);
+                        const status = cycle[cycleIndex];
+
+                        // Long break Sept 21–26
+                        if (month === 8 && currentDay >= longBreakStart && currentDay <= longBreakEnd) {
+                            content += `<span class="event break">Break</span>`;
+                        } else if (status === 'upload') {
+                            const label = currentDay < today ? 'Uploaded' : 'Upload';
+                            content += `<span class="event ${currentDay < today ? 'uploaded' : 'upload'}">${label}</span>`;
+                        } else if (status === 'break') {
+                            content += `<span class="event break">Break</span>`;
+                        }
+                    }
+
+                    html += `<td class="${cellClass}">${content}</td>`;
+                    day++;
+                }
+            }
+            html += "</tr>";
+            if (day > daysInMonth) break;
+        }
+
+        html += "</tbody></table>";
+        return html;
+    }
+
+    function renderCalendar() {
+        scheduleContainer.innerHTML = generateMonthCalendar(currentYear, currentMonth);
+        
+        
+        
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+    }
+
+    // Show current month if September, October, or December
+    const validMonths = [8, 9, 11]; // 8=Sept, 9=Oct, 11=Dec
+    if (today.getFullYear() === year && validMonths.includes(today.getMonth())) {
+        renderCalendar();
+    } else {
+        scheduleContainer.innerHTML = `<p style="text-align:center;">No schedule available for this month.</p>`;
+    }
 });

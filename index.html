@@ -22,8 +22,8 @@
     <a href="javascript:void(0)" data-scroll="home">Home</a>
     <a href="javascript:void(0)" data-scroll="tutorials">Tutorials</a>
     <a href="javascript:void(0)" data-scroll="resources">Resources</a>
+    <a href="javascript:void(0)" data-modal="scheduleModal">Schedules</a>
     <a href="javascript:void(0)" data-modal="aboutModal">About</a>
-    <a href="javascript:void(0)" data-modal="contactModal">Contact</a>
     <a href="https://www.youtube.com/@jreditz100" class="btn btn-primary"
         style="padding: 10px 20px; font-size: 0.9rem;">
         <i class="fas fa-sign-in-alt"></i> Subscribe
@@ -43,8 +43,8 @@
     <a href="javascript:void(0)" data-scroll="home">Home</a>
     <a href="javascript:void(0)" data-scroll="tutorials">Tutorials</a>
     <a href="javascript:void(0)" data-scroll="resources">Resources</a>
+    <a href="javascript:void(0)" data-modal="scheduleModal">Schedules</a>
     <a href="javascript:void(0)" data-modal="aboutModal">About</a>
-    <a href="javascript:void(0)" data-modal="contactModal">Contact</a>
     <a href="https://www.youtube.com/@jreditz100" class="btn btn-primary"
         style="padding: 10px 20px; font-size: 0.9rem;">
         <i class="fas fa-sign-in-alt"></i> Subscribe
@@ -147,6 +147,17 @@
         </div>
     </section>
 
+    <!-- Schedule Modal -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <span class="close" data-close="scheduleModal">&times;</span>
+            <h2><span id="calendarMonth">September</span> <span>Upload Schedule</span></h2>
+            <p>Here's the planned upload calendar for Jr Editz in <span id="calendarMonthText">September</span>.</p>
+            <div class="calendar">
+            </div>
+        </div>
+    </div>
+
     <!-- About Modal -->
     <div class="modal" id="aboutModal">
         <div class="modal-content">
@@ -157,20 +168,6 @@
                 and creative VFX for beginners and pros.
                 With step-by-step tutorials and free resources, we help editors bring their ideas to life.
             </p>
-        </div>
-    </div>
-
-    <!-- Contact Modal -->
-    <div class="modal" id="contactModal">
-        <div class="modal-content">
-            <span class="close" data-close="contactModal">&times;</span>
-            <h2>Contact <span>Me</span></h2>
-            <form id="contactForm">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="4" required></textarea>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
         </div>
     </div>
 

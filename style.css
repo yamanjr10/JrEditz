@@ -526,6 +526,242 @@
      color: var(--secondary);
  }
 
+ /* Schedule Calendar */
+.calendar {
+    margin-top: 25px;
+    overflow-x: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    background: rgba(26, 26, 42, 0.95);
+    padding: 15px;
+    position: relative;
+    scrollbar-width: thin;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.calendar::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 15px 15px 0 0;
+}
+
+.calendar h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: var(--secondary);
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.calendar h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+.calendar table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.calendar th {
+    padding: 15px 10px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.calendar th::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.calendar th:hover::after {
+    left: 100%;
+}
+
+.calendar td {
+    padding: 15px 8px;
+    border-radius: 10px;
+    background: rgba(10, 10, 15, 0.6);
+    color: var(--light);
+    min-width: 40px;
+    height: 80px;
+    vertical-align: top;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+}
+
+.calendar td:hover {
+    background: rgba(255, 42, 109, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 42, 109, 0.2);
+}
+
+.calendar td .day-number {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.calendar .event {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    padding: 4px 6px;
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calendar .upload {
+    background: var(--secondary);
+    color: var(--dark);
+}
+
+.calendar .break {
+    background: var(--primary);
+    color: white;
+    opacity: 0.9;
+}
+
+.calendar .uploaded {
+    background: #4caf50;
+    color: white;
+}
+
+.calendar td.today {
+    background: rgba(255, 255, 0, 0.639);
+    border: 2px solid yellow;
+    box-shadow: 0 0 15px rgb(225, 255, 0, 0.639);
+}
+
+.calendar td.today .day-number {
+    color: white;
+    font-weight: 800;
+    text-shadow: 0 0 5px rgb(225, 255, 0, 0.639);
+}
+
+.calendar td.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.calendar td.empty:hover {
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive calendar */
+@media (max-width: 768px) {
+    .calendar {
+        padding: 10px;
+    }
+    
+    .calendar td {
+        height: 60px;
+        padding: 10px 5px;
+        font-size: 0.9rem;
+    }
+    
+    .calendar td .day-number {
+        font-size: 1rem;
+    }
+    
+    .calendar .event {
+        font-size: 0.65rem;
+        padding: 3px 4px;
+    }
+    
+    .calendar th {
+        padding: 10px 5px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar td {
+        height: 50px;
+        padding: 8px 3px;
+        font-size: 0.8rem;
+    }
+    
+    .calendar td .day-number {
+        font-size: 0.9rem;
+    }
+    
+    .calendar .event {
+        font-size: 0.6rem;
+        padding: 2px 3px;
+    }
+    
+    .calendar-nav button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .calendar h3 {
+        font-size: 1.2rem;
+    }
+}
+
+.calendar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.calendar::-webkit-scrollbar-track {
+    background: rgba(26, 26, 42, 0.5);
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.calendar::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border-radius: 4px;
+}
+
+.calendar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ff5e9a, #00d9ff);
+}
+
+/* Firefox support for calendar scrollbar */
+.calendar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) rgba(26, 26, 42, 0.5);
+}
 
  /* Footer */
  footer {
@@ -692,31 +928,39 @@
  }
 
  /* Custom Scrollbar */
- ::-webkit-scrollbar {
-     width: 10px;
- }
+::-webkit-scrollbar {
+    width: 12px;
+}
 
- ::-webkit-scrollbar-track {
-     background: var(--dark);
-     border-radius: 10px;
- }
+::-webkit-scrollbar-track {
+    background: var(--dark);
+    border-radius: 10px;
+}
 
- ::-webkit-scrollbar-thumb {
-     background: linear-gradient(45deg, var(--primary), var(--secondary));
-     border-radius: 10px;
-     border: 2px solid var(--dark);
-     /* gives a nice gap effect */
- }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    border: 3px solid var(--dark);
+}
 
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ff5e9a, #00d9ff);
+}
+
+/* Firefox support for site scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--dark);
+}
  ::-webkit-scrollbar-thumb:hover {
      background: linear-gradient(45deg, #ff5e9a, #00d9ff);
  }
 
  /* Firefox support */
  * {
-     scrollbar-width: thin;
-     scrollbar-color: var(--primary) var(--dark);
- }
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--dark);
+}
 
  /* Back to Top Button */
  #backToTop {
@@ -909,7 +1153,4 @@
      color: var(--dark);
 
  }
-
-
- 
 
