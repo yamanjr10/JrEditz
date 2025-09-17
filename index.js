@@ -1,6 +1,14 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "Advance Clone in Capcut Tutorial (P2) | clone Tutorial in Capcut",
+        thumbnail: "img/Advance Clone in Capcut Tutorial ( P 2 ) clone Tutorial in Capcut.jpg",
+        link: "",
+        duration: "8 min",
+        date: "Coming Soon",
+        badge: "up coming",   
+    },
+    {
         title: "How to make Doted glitch effect in Capcut | glitch effect in Capcut Tutorial",
         thumbnail: "img/How to make Doted glitch effect in Capcut glitch effect in Capcut Tutorial.jpg",
         link: "https://youtu.be/a0EkP5bYq5g?si=Hg0DzDoWEaAWoapz",
