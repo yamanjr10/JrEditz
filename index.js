@@ -3,10 +3,10 @@ const tutorials = [
     {
         title: "Funk De Blezela Edit Tutorial Toji 🥵 Manga Edit Tutorial",
         thumbnail: "img/Funk De Blezela Edit Tutorial Toji 🥵 Manga Edit Tutorial.jpg",
-        link: "",
-        duration: " 15 min",
+        link: "https://youtu.be/eql35mOO6bc?si=LoCEPUsXXLBJS4Gc",
+        duration: "15 min",
         date: "19 Sep 2025",
-        badge: "up coming",
+        badge: "out now",
     },
     {
         title: "Advance Clone in Capcut Tutorial (P2) | clone Tutorial in Capcut",
@@ -505,3 +505,4 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleContainer.innerHTML = `<p style="text-align:center;">No schedule available for this month.</p>`;
     }
 });
+
