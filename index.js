@@ -1,20 +1,27 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "Manga glitch effect in Capcut | glitch effect in Capcut Tutorial",
+        thumbnail: "img/Manga glitch effect in Capcut  glitch effect in Capcut.jpg",
+        link: "",
+        duration: "? min",
+        date: "Coming Soon",
+        badge: "up coming",
+    },
+    {
         title: "Funk De Blezela Edit Tutorial Toji 🥵 Manga Edit Tutorial",
         thumbnail: "img/Funk De Blezela Edit Tutorial Toji 🥵 Manga Edit Tutorial.jpg",
         link: "https://youtu.be/eql35mOO6bc?si=LoCEPUsXXLBJS4Gc",
         duration: "15 min",
         date: "19 Sep 2025",
-        badge: "out now",
+        badge: "new",
     },
     {
         title: "Advance Clone in Capcut Tutorial (P2) | clone Tutorial in Capcut",
         thumbnail: "img/Advance Clone in Capcut Tutorial ( P 2 ) clone Tutorial in Capcut.jpg",
         link: "https://youtu.be/p2jnyNONlSc?si=0cJAskRTXQR1nkuF",
         duration: "8 min",
-        date: "18 Sep 2025",
-        badge: "new",   
+        date: "18 Sep 2025", 
     },
     {
         title: "How to make Doted glitch effect in Capcut | glitch effect in Capcut Tutorial",
@@ -505,4 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleContainer.innerHTML = `<p style="text-align:center;">No schedule available for this month.</p>`;
     }
 });
+
+
+
 

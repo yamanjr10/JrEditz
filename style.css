@@ -1107,49 +1107,220 @@
  }
 
  /* Video Badges */
- .video-badge {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     padding: 5px 10px;
-     border-radius: 20px;
-     font-size: 0.7rem;
-     font-weight: 700;
-     text-transform: uppercase;
-     letter-spacing: 0.5px;
-     z-index: 3;
-     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
- }
+.video-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 3;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    animation: pulse 2s infinite;
+}
 
- /* Specific badge styles */
- .video-badge.trending {
-     background: linear-gradient(45deg, #ff2a6d, #ff5e9a);
-     color: white;
- }
+/* Specific badge styles with unique animations */
+.video-badge.trending {
+    background: linear-gradient(45deg, #ff2a6d, #ff5e9a);
+    color: white;
+    animation: pulse 1.5s infinite, glowTrending 3s infinite;
+}
 
- .video-badge.popular {
-     background: linear-gradient(45deg, #9b59b6, #8e44ad);
-     color: white;
+.video-badge.popular {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+    color: white;
+    animation: pulse 2s infinite, glowPopular 4s infinite;
+}
 
- }
+.video-badge.new {
+    background: linear-gradient(45deg, #00a2ff, #55fff1);
+    color: var(--dark);
+    animation: shine 3s infinite, glowNew 2.5s infinite;
+}
 
- .video-badge.new {
-     background: linear-gradient(45deg, #00a2ff, #55fff1);
-     color: var(--dark);
- }
+.video-badge.up-coming {
+    background: linear-gradient(45deg, #6fff7b, #32d96c);
+    color: var(--dark);
+    animation: pulse 1.8s infinite, glowUpcoming 3.5s infinite;
+}
 
- .video-badge.up-coming {
-     background: linear-gradient(45deg, #6fff7b, #32d96c);
-     color: var(--dark);
- }
+.video-badge.hot {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    animation: pulse 1.2s infinite, glowHot 2s infinite;
+}
 
- .video-badge.hot {
-     background: linear-gradient(45deg, #e74c3c, #c0392b);
-     color: white;
- }
+.video-badge.out-now {
+    background: linear-gradient(45deg, #f39c12, #f1c40f);
+    color: var(--dark);
+    animation: shine 2.5s infinite, glowOutNow 3s infinite;
+}
 
- .video-badge.out-now {
-     background: linear-gradient(45deg, #f39c12, #f1c40f);
-     color: var(--dark);
+/* Hover effects */
+.video-card:hover .video-badge {
+    animation-play-state: paused;
+}
 
- }
+.video-card:hover .video-badge.trending {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 42, 109, 0.8);
+}
+
+.video-card:hover .video-badge.popular {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(155, 89, 182, 0.8);
+}
+
+.video-card:hover .video-badge.new {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 162, 255, 0.8);
+}
+
+.video-card:hover .video-badge.up-coming {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(111, 255, 123, 0.8);
+}
+
+.video-card:hover .video-badge.hot {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
+}
+
+.video-card:hover .video-badge.out-now {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.8);
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shine {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes glowTrending {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 42, 109, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 42, 109, 0.9), 0 0 20px rgba(255, 42, 109, 0.6);
+    }
+}
+
+@keyframes glowPopular {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(155, 89, 182, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(155, 89, 182, 0.9), 0 0 20px rgba(155, 89, 182, 0.6);
+    }
+}
+
+@keyframes glowNew {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 162, 255, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(0, 162, 255, 0.9), 0 0 20px rgba(0, 162, 255, 0.6);
+    }
+}
+
+@keyframes glowUpcoming {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(111, 255, 123, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(111, 255, 123, 0.9), 0 0 20px rgba(111, 255, 123, 0.6);
+    }
+}
+
+@keyframes glowHot {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(231, 76, 60, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(231, 76, 60, 0.9), 0 0 20px rgba(231, 76, 60, 0.6);
+    }
+}
+
+@keyframes glowOutNow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(243, 156, 18, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(243, 156, 18, 0.9), 0 0 20px rgba(243, 156, 18, 0.6);
+    }
+}
+
+/* Shine effect for specific badges */
+.video-badge.new,
+.video-badge.out-now {
+    background-size: 200% auto;
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    ), var(--badge-gradient);
+}
+
+/* Add these gradient variables for the shine effect */
+.video-badge.new {
+    --badge-gradient: linear-gradient(45deg, #00a2ff, #55fff1);
+}
+
+.video-badge.out-now {
+    --badge-gradient: linear-gradient(45deg, #f39c12, #f1c40f);
+}
+ 
+/* Badge ripple effect */
+.badge-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
+}
+
+/* Ensure badges have relative positioning for ripple effect */
+.video-badge {
+    position: absolute;
+    overflow: hidden;
+}
