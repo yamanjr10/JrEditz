@@ -4,8 +4,8 @@ const tutorials = [
         title: "Manga glitch effect in Capcut | glitch effect in Capcut Tutorial",
         thumbnail: "img/Manga glitch effect in Capcut  glitch effect in Capcut.jpg",
         link: "",
-        duration: "? min",
-        date: "Coming Soon",
+        duration: "4 min",
+        date: "27 Sep 2025",
         badge: "up coming",
     },
     {
