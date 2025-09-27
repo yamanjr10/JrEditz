@@ -1387,11 +1387,55 @@
 }
 
 .upcoming-tutorial {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(0, 245, 255, 0.1);
-    border-radius: 10px;
-    border-left: 4px solid var(--secondary);
+    background: rgba(10, 10, 15, 0.9);
+    border: 2px solid var(--primary);
+    border-radius: 25px;
+    padding: 15px 30px;
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(255, 42, 109, 0.1);
+    cursor: pointer;
+}
+
+.upcoming-tutorial::before {
+    content: 'UPCOMING';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: white;
+    padding: 2px 20px;
+    border-radius: 0 0 10px 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.upcoming-tutorial strong {
+    color: var(--secondary);
+    font-weight: 700;
+    margin-right: 8px;
+    text-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+}
+
+.upcoming-tutorial:hover {
+    animation: pulseUpcoming 2s infinite;
+}
+
+@keyframes pulseUpcoming {
+    0%, 100% {
+        box-shadow: 0 10px 30px rgba(255, 42, 109, 0.1);
+        border-color: var(--primary);
+    }
+    50% {
+        box-shadow: 0 10px 40px rgba(255, 42, 109, 0.3);
+        border-color: var(--secondary);
+    }
 }
 
 /* Smooth section transitions */
@@ -1404,5 +1448,30 @@ section {
 section.visible {
     opacity: 1;
     transform: translateY(0);
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .upcoming-tutorial {
+        margin: 20px 15px;
+        padding: 15px 20px;
+        font-size: 0.95rem;
+    }
+    
+    .upcoming-tutorial strong {
+        display: block;
+        margin-bottom: 5px;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .upcoming-tutorial {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .upcoming-tutorial::after {
+        display: none; /* Hide icon on very small screens */
+    }
 }
 
