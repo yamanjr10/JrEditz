@@ -1324,3 +1324,85 @@
     position: absolute;
     overflow: hidden;
 }
+
+/* Page Transitions */
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.page-transition.active {
+    transform: translateY(0);
+}
+
+/* Countdown Timer */
+.countdown-container {
+    background: linear-gradient(145deg, rgba(26, 26, 42, 0.9), rgba(10, 10, 15, 0.9));
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid var(--secondary);
+    margin: 30px auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+.countdown-title {
+    color: var(--secondary);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    text-align: center;
+    min-width: 70px;
+}
+
+.countdown-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    font-family: 'Oxanium', cursive;
+    text-shadow: 0 0 10px rgba(255, 42, 109, 0.5);
+}
+
+.countdown-label {
+    font-size: 0.8rem;
+    color: var(--light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.upcoming-tutorial {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 245, 255, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid var(--secondary);
+}
+
+/* Smooth section transitions */
+section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
