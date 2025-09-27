@@ -14,7 +14,7 @@ const tutorials = [
         link: "https://youtu.be/zG7iOZTSAeg?si=3xNI770TxhYdsCjV",
         duration: "4 min",
         date: "27 Sep 2025",
-        badge: "new",
+        badge: "out now",
     },
     {
         title: "Funk De Blezela Edit Tutorial Toji 🥵 Manga Edit Tutorial",
@@ -643,6 +643,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCountdownTimer();
     initScrollAnimations();
 });
+
 
 
 
