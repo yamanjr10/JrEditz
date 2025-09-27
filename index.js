@@ -1,5 +1,6 @@
 // Tutorial data
-const tutorials = [{
+const tutorials = [
+    {
         title: "How to Make Manga Clips For Your Edit in Capcut + Movement to those clips",
         thumbnail: "img/How to Make Manga Clips For Your Edit in Capcut + Movement to those clips.jpg",
         link: "https://youtu.be/2srW2725kpE?si=mRhlKrzbT14TI03N",
@@ -13,7 +14,7 @@ const tutorials = [{
         link: "https://youtu.be/zG7iOZTSAeg?si=3xNI770TxhYdsCjV",
         duration: "4 min",
         date: "27 Sep 2025",
-        badge: "out now",
+        badge: "new",
     },
     {
         title: "Funk De Blezela Edit Tutorial Toji 🥵 Manga Edit Tutorial",
@@ -21,7 +22,6 @@ const tutorials = [{
         link: "https://youtu.be/eql35mOO6bc?si=LoCEPUsXXLBJS4Gc",
         duration: "15 min",
         date: "19 Sep 2025",
-        badge: "new",
     },
     {
         title: "Advance Clone in Capcut Tutorial (P2) | clone Tutorial in Capcut",
@@ -518,6 +518,130 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         scheduleContainer.innerHTML = `<p style="text-align:center;">No schedule available for this month.</p>`;
     }
+});
+
+// Custom Cursor
+function initCustomCursor() {
+    const cursor = document.querySelector('.cursor');
+    const follower = document.querySelector('.cursor-follower');
+    
+    if (window.innerWidth > 768) {
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        // Hover effects
+        const hoverElements = document.querySelectorAll('a, button, .video-card, .feature-card, .resource-card');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                follower.style.transform = 'scale(1.3)';
+                follower.style.borderColor = 'var(--primary)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                follower.style.transform = 'scale(1)';
+                follower.style.borderColor = 'var(--secondary)';
+            });
+        });
+    }
+}
+
+// Page Transitions
+function initPageTransitions() {
+    const transition = document.getElementById('pageTransition');
+    
+    // Show transition on page load
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            transition.classList.remove('active');
+        }, 100);
+    });
+    
+    // Smooth navigation between sections
+    document.querySelectorAll('[data-scroll]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('data-scroll');
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                // Add slight delay for transition feel
+                setTimeout(() => {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }, 200);
+            }
+        });
+    });
+}
+
+async function initYouTubeStats() {
+}
+
+// Countdown Timer
+function initCountdownTimer() {
+    const nextTutorialDate = new Date('2025-09-28T10:30:00').getTime(); // Replace with actual next tutorial date
+    
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = nextTutorialDate - now;
+        
+        if (distance < 0) {
+            document.getElementById('countdownContainer').innerHTML = `
+                <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
+                <a href="#tutorials" class="btn btn-primary" style="margin-top: 20px;">
+                    <i class="fas fa-play"></i> Watch Now
+                </a>
+            `;
+            return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+// Scroll animations for sections
+function initScrollAnimations() {
+    const sections = document.querySelectorAll('section');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+}
+
+// Initialize all features when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    initCustomCursor();
+    initPageTransitions();
+    initYouTubeStats();
+    initCountdownTimer();
+    initScrollAnimations();
 });
 
 
