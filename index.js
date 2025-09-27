@@ -1,5 +1,12 @@
 // Tutorial data
-const tutorials = [
+const tutorials = [{
+        title: "How to Make Manga Clips For Your Edit in Capcut + Movement to those clips",
+        thumbnail: "img/How to Make Manga Clips For Your Edit in Capcut + Movement to those clips.jpg",
+        link: "https://youtu.be/2srW2725kpE?si=mRhlKrzbT14TI03N",
+        duration: "5 min",
+        date: "28 Sep 2025",
+        badge: "up coming",
+    },
     {
         title: "Manga glitch effect in Capcut | glitch effect in Capcut Tutorial",
         thumbnail: "img/Manga glitch effect in Capcut  glitch effect in Capcut.jpg",
@@ -512,7 +519,6 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleContainer.innerHTML = `<p style="text-align:center;">No schedule available for this month.</p>`;
     }
 });
-
 
 
 
