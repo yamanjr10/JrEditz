@@ -1,6 +1,14 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "How to make Aura in Capcut | 3 Types of Aura in Capcut Tutorial",
+        thumbnail: "img/How to make Aura in Capcut  3 Types of Aura in Capcut Tutorial.jpg",
+        link: "",
+        duration: "8 min",
+        date: "3 Oct 2025",
+        badge: "up coming",
+    },
+    {
         title: "If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit",
         thumbnail: "img/If Your Hand is Cut Off Edit Tutorial  GOJO Using RCT 🩸🔥 Manga Edit.jpg",
         link: "https://youtu.be/vYXW5e1yZ_Y?si=1soJFFK0ENLkHgpG",
@@ -601,7 +609,7 @@ async function initYouTubeStats() {
 
 // Countdown Timer
 function initCountdownTimer() {
-    const nextTutorialDate = new Date('2025-10-01T10:30:00').getTime(); // Replace with actual next tutorial date
+    const nextTutorialDate = new Date('2025-10-03T10:30:00').getTime(); // Replace with actual next tutorial date
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -610,7 +618,7 @@ function initCountdownTimer() {
         if (distance < 0) {
             document.getElementById('countdownContainer').innerHTML = `
                 <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
-                <a href="https://youtu.be/vYXW5e1yZ_Y?si=1soJFFK0ENLkHgpG" class="btn btn-primary" style="margin-top: 20px;">
+                <a href="" class="btn btn-primary" style="margin-top: 20px;">
                     <i class="fas fa-play"></i> Watch Now
                 </a>
             `;
