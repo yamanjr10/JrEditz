@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jreditz - Anime Video Editing Tutorials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Oxanium:wght@400;600;800&display=swap"rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-film" style="color: var(--primary); font-size: 2rem;"></i>
+                <span class="logo-text">Jreditz</span>
+            </div>
+           <nav class="nav-links">
+    <a href="javascript:void(0)" data-scroll="home">Home</a>
+    <a href="javascript:void(0)" data-scroll="tutorials">Tutorials</a>
+    <a href="javascript:void(0)" data-scroll="resources">Resources</a>
+    <a href="javascript:void(0)" data-modal="scheduleModal">Schedules</a>
+    <a href="javascript:void(0)" data-modal="aboutModal">About</a>
+    <a href="https://www.youtube.com/@jreditz100" class="btn btn-primary"style="padding: 10px 20px; font-size: 0.9rem;"><i class="fas fa-sign-in-alt"></i> Subscribe</a>
+</nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <nav class="mobile-nav-links">
+    <a href="javascript:void(0)" data-scroll="home">Home</a>
+    <a href="javascript:void(0)" data-scroll="tutorials">Tutorials</a>
+    <a href="javascript:void(0)" data-scroll="resources">Resources</a>
+    <a href="javascript:void(0)" data-modal="scheduleModal">Schedules</a>
+    <a href="javascript:void(0)" data-modal="aboutModal">About</a>
+    <a href="https://www.youtube.com/@jreditz100" class="btn btn-primary"style="padding: 10px 20px; font-size: 0.9rem;"><i class="fas fa-sign-in-alt"></i> Subscribe</a>
+</nav>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="particles" id="particles"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Learn <span>Anime Video Editing</span> Like A Pro</h1>
+            <p class="hero-subtitle">Master anime editing, manga panel editing, and visual effects with Jreditz
+                tutorials
+            </p>
+            <div class="cta-buttons">
+                <a href="javascript:void(0)" data-scroll="tutorials" class="btn btn-primary"><i class="fas fa-play-circle"></i> Watch Tutorials</a>
+                <a href="javascript:void(0)" data-scroll="resources" class="btn btn-secondary"><i class="fas fa-download"></i> Free Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- countdown -->
+ <div class="countdown-container" id="countdownContainer">
+    <h3 class="countdown-title">Next Tutorial In:</h3>
+    <div class="countdown-timer">
+        <div class="countdown-item">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">Dys</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">Hrs</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">Mins</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-number" id="seconds">00</div>
+            <div class="countdown-label">Secs</div>
+        </div>
+    </div>
+    <div class="upcoming-tutorial">
+    If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit
+    </div>
+</div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Learn With <span>Jreditz</span></h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Effects</h3>
+                    <p>Learn professional visual effects, glitch transitions, and motion graphics techniques.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="feature-title">Free Resources</h3>
+                    <p>Download green screens, sound effects, and templates to use in your own projects.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Editing</h3>
+                    <p>Master CapCut mobile editing with techniques designed specifically for phone users.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section class="tutorials" id="tutorials">
+    <div class="container" id="tutorials-container"></div>
+    
+    <!--  Pagination controls -->
+    <div class="pagination-container container">
+        <div class="pagination" id="pagination"></div>
+    </div>
+</section>
+
+
+    <!-- Resources Section -->
+    <section class="resources" id="resources">
+        <div class="container">
+            <h2 class="section-title">Free <span>Resources</span></h2>
+            <div class="resource-card">
+                <div class="resource-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="resource-title">Manga Panels</h3>
+                <p>50+ Customizable manga panel templates for your edits in mp4 formats.</p>
+                <button class="download-btn">
+                    <a href="https://drive.google.com/drive/folders/1aGg3iwnZCXyYT6p95p0PJZwO1VK_xbJC?usp=sharing"
+                        style="color: #ffffff; text-decoration:none;"><i class="fas fa-download"></i>
+                        Download</a></button>
+            </div>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                <div class="resource-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="resource-title">Materials</h3>
+                <p>Collection of textures, overlays, clips and materials to enhance your anime edits with professional quality assets.</p>
+                <button class="download-btn">
+                    <a href="https://drive.google.com/drive/folders/15kDlWefQxrcXQejo2_I_BcpBGEF-eEN9?usp=drive_link"
+                        style="color: #ffffff; text-decoration:none;"><i class="fas fa-download"></i>
+                        Download</a></button>
+              </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Modal -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <span class="close" data-close="scheduleModal">&times;</span>
+            <h2><span id="calendarMonth">October</span> <span>Upload Schedule</span></h2>
+            <p>Here's the planned upload calendar for Jr Editz in <span id="calendarMonthText">October</span>.</p>
+            <div class="calendar">
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <span class="close" data-close="aboutModal">&times;</span>
+            <h2>About <span>Jreditz</span></h2>
+            <p>
+                Jreditz is dedicated to teaching anime video editing, manga panel animation,
+                and creative VFX for beginners and pros.
+                With step-by-step tutorials and free resources, we help editors bring their ideas to life.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">Jreditz</div>
+                    <p>Learn anime video editing with professional tutorials and free resources.</p>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/@jreditz100"><i class="fab fa-youtube"></i></a>
+                        <a href="https://discord.gg/ZwFtgkkBMc"><i class="fab fa-discord"></i></a>
+                        <a href="https://www.instagram.com/yamanjr10/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/yamanjr10"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links-container">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="javascript:void(0)" data-scroll="home">Home</a></li>
+                        <li><a href="javascript:void(0)" data-scroll="tutorials">Tutorials</a></li>
+                        <li><a href="javascript:void(0)" data-scroll="resources">Resources</a></li>
+                        <li><a href="javascript:void(0)" data-modal="scheduleModal">Schedules</a></li>
+                        <li><a href="javascript:void(0)" data-modal="aboutModal">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-container">
+                    <h4 class="footer-heading">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="javascript:void(0)" data-scroll="resources">Green Screen Pack</a></li>
+                        <li><a href="javascript:void(0)" data-scroll="resources">Sound Effects</a></li>
+                        <li><a href="javascript:void(0)" data-scroll="resources">Templates</a></li>
+                        <li><a href="javascript:void(0)" data-scroll="resources">Presets</a></li>
+                        <li><a href="javascript:void(0)" data-scroll="resources">Software Guides</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Jreditz. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Page Transition Overlay -->
+<div class="page-transition" id="pageTransition"></div>
+
+<!-- Back to Top Button -->
+<button id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="index.js"></script>
+
+</body>
+</html>
