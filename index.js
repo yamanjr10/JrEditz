@@ -6,7 +6,7 @@ const tutorials = [
         link: "https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM",
         duration: "8 min",
         date: "3 Oct 2025",
-        badge: "up coming",
+        badge: "out now",
     },
     {
         title: "If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit",
@@ -14,7 +14,7 @@ const tutorials = [
         link: "https://youtu.be/vYXW5e1yZ_Y?si=1soJFFK0ENLkHgpG",
         duration: "8 min",
         date: "1 Oct 2025",
-        badge: "out now",   
+        badge: "new",   
     },
     {
         title: "Ku Lo Sa Edit Tutorial | Kaiser 🥵 Manga Edit Tutorial",
@@ -22,7 +22,6 @@ const tutorials = [
         link: "https://youtu.be/s9t8GRolr8Y?si=MWzmfBXuDRibX8bW",
         duration: "5 min",
         date: "30 Sep 2025", 
-        badge: "new",
     },
     {
         title: "How to Make Manga Clips For Your Edit in Capcut + Movement to those clips",
