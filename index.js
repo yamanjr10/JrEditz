@@ -3,7 +3,7 @@ const tutorials = [
     {
         title: "How to make Aura in Capcut | 3 Types of Aura in Capcut Tutorial",
         thumbnail: "img/How to make Aura in Capcut  3 Types of Aura in Capcut Tutorial.jpg",
-        link: "",
+        link: "https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM",
         duration: "8 min",
         date: "3 Oct 2025",
         badge: "up coming",
@@ -618,7 +618,7 @@ function initCountdownTimer() {
         if (distance < 0) {
             document.getElementById('countdownContainer').innerHTML = `
                 <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
-                <a href="" class="btn btn-primary" style="margin-top: 20px;">
+                <a href="https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM" class="btn btn-primary" style="margin-top: 20px;">
                     <i class="fas fa-play"></i> Watch Now
                 </a>
             `;
