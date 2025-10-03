@@ -1,12 +1,20 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "How To Make Null in Capcut Tutorial | Null Tutorial in Capcut",
+        thumbnail: "img/How To Make Null in Capcut Tutorial Null Tutorial in Capcut.jpg",
+        link: "https://youtu.be/LBtX7De90xE?si=rAvuGZZ6IBzvfxxY",
+        duration: "9 min",
+        date: "4 Oct 2025",
+        badge: "up coming",
+    },
+    {
         title: "How to make Aura in Capcut | 3 Types of Aura in Capcut Tutorial",
         thumbnail: "img/How to make Aura in Capcut  3 Types of Aura in Capcut Tutorial.jpg",
         link: "https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM",
         duration: "8 min",
         date: "3 Oct 2025",
-        badge: "up coming",
+        badge: "out now ",
     },
     {
         title: "If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit",
@@ -14,7 +22,7 @@ const tutorials = [
         link: "https://youtu.be/vYXW5e1yZ_Y?si=1soJFFK0ENLkHgpG",
         duration: "8 min",
         date: "1 Oct 2025",
-        badge: "out now",   
+        badge: "new",   
     },
     {
         title: "Ku Lo Sa Edit Tutorial | Kaiser 🥵 Manga Edit Tutorial",
@@ -22,7 +30,6 @@ const tutorials = [
         link: "https://youtu.be/s9t8GRolr8Y?si=MWzmfBXuDRibX8bW",
         duration: "5 min",
         date: "30 Sep 2025", 
-        badge: "new",
     },
     {
         title: "How to Make Manga Clips For Your Edit in Capcut + Movement to those clips",
@@ -609,7 +616,7 @@ async function initYouTubeStats() {
 
 // Countdown Timer
 function initCountdownTimer() {
-    const nextTutorialDate = new Date('2025-10-03T10:30:00').getTime(); // Replace with actual next tutorial date
+    const nextTutorialDate = new Date('2025-10-04T10:30:00').getTime(); // Replace with actual next tutorial date
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -618,7 +625,7 @@ function initCountdownTimer() {
         if (distance < 0) {
             document.getElementById('countdownContainer').innerHTML = `
                 <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
-                <a href="https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM" class="btn btn-primary" style="margin-top: 20px;">
+                <a href="https://youtu.be/LBtX7De90xE?si=rAvuGZZ6IBzvfxxY" class="btn btn-primary" style="margin-top: 20px;">
                     <i class="fas fa-play"></i> Watch Now
                 </a>
             `;
