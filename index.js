@@ -1,6 +1,14 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "Manga Edit [ MADARA X AIZEN ] Tutorial | Manga Edit Tutorial",
+        thumbnail: "img/Manga Edit [ MADARA X AIZEN ] Tutorial Manga Edit Tutorial.jpg",
+        link: "",
+        duration: "8 min",
+        date: "coming soon",
+        badge: "up coming",
+    },
+    {
         title: "How To Make Null in Capcut Tutorial | Null Tutorial in Capcut",
         thumbnail: "img/How To Make Null in Capcut Tutorial Null Tutorial in Capcut.jpg",
         link: "https://youtu.be/LBtX7De90xE?si=rAvuGZZ6IBzvfxxY",
@@ -438,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const scheduleContainer = document.querySelector("#scheduleModal .calendar");
     const year = 2025;
     const startDate = new Date(year, 8, 12); // Sept 12, 2025
+    const newScheduleStartDate = new Date(year, 9, 19); // Oct 19, 2025
     const cycle = ['upload', 'upload', 'break'];
     const longBreakStart = new Date(year, 8, 21);
     const longBreakEnd = new Date(year, 8, 26);
@@ -456,6 +465,21 @@ document.addEventListener("DOMContentLoaded", () => {
             current.setDate(current.getDate() + 1);
         }
         return index % cycle.length;
+    }
+
+    function isUploadDay(date) {
+        // Check if date is Monday (1), Wednesday (3), or Friday (5)
+        const dayOfWeek = date.getDay();
+        return dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5;
+    }
+
+    function isUploadedByTime(uploadDate) {
+        // Create a date object for 10:30 AM on the upload day
+        const uploadTime = new Date(uploadDate);
+        uploadTime.setHours(10, 30, 0, 0); // Set to 10:30 AM
+        
+        // Check if current time is after 10:30 AM on upload day
+        return today >= uploadTime;
     }
 
     function generateMonthCalendar(year, month) {
@@ -498,17 +522,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // Add event if after start date
                     if (currentDay >= startDate) {
-                        let cycleIndex = calculateCycleIndex(currentDay);
-                        const status = cycle[cycleIndex];
+                        // Before Oct 18: Use original cycle system
+                        if (currentDay < newScheduleStartDate) {
+                            let cycleIndex = calculateCycleIndex(currentDay);
+                            const status = cycle[cycleIndex];
 
-                        // Long break Sept 21–26
-                        if (month === 8 && currentDay >= longBreakStart && currentDay <= longBreakEnd) {
-                            content += `<span class="event break">Break</span>`;
-                        } else if (status === 'upload') {
-                            const label = currentDay < today ? 'Uploaded' : 'Upload';
-                            content += `<span class="event ${currentDay < today ? 'uploaded' : 'upload'}">${label}</span>`;
-                        } else if (status === 'break') {
-                            content += `<span class="event break">Break</span>`;
+                            // Long break Sept 21–26
+                            if (month === 8 && currentDay >= longBreakStart && currentDay <= longBreakEnd) {
+                                content += `<span class="event break">Break</span>`;
+                            } else if (status === 'upload') {
+                                const isUploaded = isUploadedByTime(currentDay);
+                                const label = isUploaded ? 'Uploaded' : 'Upload';
+                                content += `<span class="event ${isUploaded ? 'uploaded' : 'upload'}">${label}</span>`;
+                            } else if (status === 'break') {
+                                content += `<span class="event break">Break</span>`;
+                            }
+                        } 
+                        // From Oct 18 onwards: Use new Monday/Wednesday/Friday schedule
+                        else {
+                            if (isUploadDay(currentDay)) {
+                                const isUploaded = isUploadedByTime(currentDay);
+                                const label = isUploaded ? 'Uploaded' : 'Upload';
+                                content += `<span class="event ${isUploaded ? 'uploaded' : 'upload'}">${label}</span>`;
+                            }
                         }
                     }
 
