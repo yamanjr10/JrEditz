@@ -441,12 +441,13 @@ window.addEventListener('scroll', setActiveNav);
 document.addEventListener('DOMContentLoaded', function() {
     setActiveNav();
 });
+
 // ------- Enhanced Schedule Calendar Generation -------
 document.addEventListener("DOMContentLoaded", () => {
     const scheduleContainer = document.querySelector("#scheduleModal .calendar");
     const year = 2025;
     const startDate = new Date(year, 8, 12); // Sept 12, 2025
-    const newScheduleStartDate = new Date(year, 9, 19); // Oct 19, 2025
+    const newScheduleStartDate = new Date(year, 9, 18); // Oct 18, 2025
     const cycle = ['upload', 'upload', 'break'];
     const longBreakStart = new Date(year, 8, 21);
     const longBreakEnd = new Date(year, 8, 26);
@@ -510,6 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     let cellClass = "";
                     let content = `<span class="day-number">${day}</span>`;
                     let currentDay = new Date(year, month, day);
+                    let hasUploadEvent = false;
 
                     // Check if today
                     if (
@@ -530,12 +532,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             // Long break Sept 21–26
                             if (month === 8 && currentDay >= longBreakStart && currentDay <= longBreakEnd) {
                                 content += `<span class="event break">Break</span>`;
+                                hasUploadEvent = true;
                             } else if (status === 'upload') {
                                 const isUploaded = isUploadedByTime(currentDay);
                                 const label = isUploaded ? 'Uploaded' : 'Upload';
                                 content += `<span class="event ${isUploaded ? 'uploaded' : 'upload'}">${label}</span>`;
+                                hasUploadEvent = true;
                             } else if (status === 'break') {
                                 content += `<span class="event break">Break</span>`;
+                                hasUploadEvent = true;
                             }
                         } 
                         // From Oct 18 onwards: Use new Monday/Wednesday/Friday schedule
@@ -544,7 +549,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                 const isUploaded = isUploadedByTime(currentDay);
                                 const label = isUploaded ? 'Uploaded' : 'Upload';
                                 content += `<span class="event ${isUploaded ? 'uploaded' : 'upload'}">${label}</span>`;
+                                hasUploadEvent = true;
                             }
+                        }
+                        
+                        // Mark ALL other days as Break (pink) - both past and future
+                        if (!hasUploadEvent) {
+                            content += `<span class="event break">Break</span>`;
                         }
                     }
 
