@@ -14,7 +14,6 @@ const tutorials = [
         link: "https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM",
         duration: "8 min",
         date: "3 Oct 2025",
-        badge: "new ",
     },
     {
         title: "If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit",
