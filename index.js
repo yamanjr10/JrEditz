@@ -1,6 +1,14 @@
 // Tutorial data
 const tutorials = [
     {
+        title: "Manga Edit [ MADARA X AIZEN ] Tutorial | Manga Edit Tutorial",
+        thumbnail: "img/Manga Edit [ MADARA X AIZEN ] Tutorial Manga Edit Tutorial.jpg",
+        link: "",
+        duration: "8 min",
+        date: "coming soon",
+        badge: "up coming",
+    },
+    {
         title: "How To Make Null in Capcut Tutorial | Null Tutorial in Capcut",
         thumbnail: "img/How To Make Null in Capcut Tutorial Null Tutorial in Capcut.jpg",
         link: "https://youtu.be/LBtX7De90xE?si=rAvuGZZ6IBzvfxxY",
@@ -14,6 +22,7 @@ const tutorials = [
         link: "https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM",
         duration: "8 min",
         date: "3 Oct 2025",
+        badge: "new",
     },
     {
         title: "If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit",
