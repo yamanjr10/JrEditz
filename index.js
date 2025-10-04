@@ -4,7 +4,7 @@ const tutorials = [
         title: "Manga Edit [ MADARA X AIZEN ] Tutorial | Manga Edit Tutorial",
         thumbnail: "img/Manga Edit [ MADARA X AIZEN ] Tutorial Manga Edit Tutorial.jpg",
         link: "",
-        duration: "8 min",
+        duration: "5 min",
         date: "coming soon",
         badge: "up coming",
     },
