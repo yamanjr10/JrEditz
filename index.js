@@ -6,7 +6,7 @@ const tutorials = [
         link: "https://youtu.be/LBtX7De90xE?si=rAvuGZZ6IBzvfxxY",
         duration: "9 min",
         date: "4 Oct 2025",
-        badge: "up coming",
+        badge: "out now",
     },
     {
         title: "How to make Aura in Capcut | 3 Types of Aura in Capcut Tutorial",
@@ -14,15 +14,14 @@ const tutorials = [
         link: "https://youtu.be/X_ViZM7rBlo?si=O4sapYDQDofWuqZM",
         duration: "8 min",
         date: "3 Oct 2025",
-        badge: "out now ",
+        badge: "new",
     },
     {
         title: "If Your Hand is Cut Off Edit Tutorial | GOJO Using RCT 🩸🔥 🥵 Manga Edit",
         thumbnail: "img/If Your Hand is Cut Off Edit Tutorial  GOJO Using RCT 🩸🔥 Manga Edit.jpg",
         link: "https://youtu.be/vYXW5e1yZ_Y?si=1soJFFK0ENLkHgpG",
         duration: "8 min",
-        date: "1 Oct 2025",
-        badge: "new",   
+        date: "1 Oct 2025", 
     },
     {
         title: "Ku Lo Sa Edit Tutorial | Kaiser 🥵 Manga Edit Tutorial",
