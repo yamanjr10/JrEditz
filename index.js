@@ -31,11 +31,12 @@ async function loadTutorials() {
         console.error('Error loading tutorials:', error);
         tutorials = [];
     } finally {
-        // Initialize or refresh UI wherever safe
-        if (typeof displayTutorials === 'function') displayTutorials(currentPage);
-        if (typeof initCountdownTimer === 'function') initCountdownTimer(); // will guard inside
-        updateUpcomingTutorial();
-    }
+    autoUpdateBadges();
+    if (typeof displayTutorials === 'function') displayTutorials(currentPage);
+    if (typeof initCountdownTimer === 'function') initCountdownTimer();
+    updateUpcomingTutorial();
+}
+
 }
 
 // Generate Tutorials Section with pagination
@@ -229,103 +230,37 @@ function updateUpcomingTutorial() {
 }
 
 // Auto Countdown Timer that matches the calendar schedule exactly
+// Countdown Timer that always checks top tutorial
 function initCountdownTimer() {
-    // Lazy guard if countdown container is missing
     countdownContainer = document.getElementById('countdownContainer');
     if (!countdownContainer) {
         console.warn('No countdownContainer in DOM — skipping countdown initialization.');
         return;
     }
 
-    const scheduleChangeDate = new Date(2025, 9, 18); // Oct 18, 2025 (switch to Mon/Wed/Fri after this date)
-    
-    function getNextUploadDate() {
-        const today = new Date();
-        const isNewSchedule = today >= scheduleChangeDate;
-        return isNewSchedule ? getNextUploadDateNewSchedule() : getNextUploadDateOldSchedule();
-    }
-
-    function getNextUploadDateNewSchedule() {
-        const today = new Date();
-        const uploadDays = [1, 3, 5]; // Mon, Wed, Fri
-        const uploadHour = 10, uploadMinute = 30;
-
-        const lastUpload = getLastUploadFromTutorials();
-        if (lastUpload && lastUpload.uploadTime) {
-            const fifteenHoursAfterUpload = new Date(lastUpload.uploadTime.getTime() + (15 * 60 * 60 * 1000));
-            if (today < fifteenHoursAfterUpload) return fifteenHoursAfterUpload;
+    function getCurrentTutorial() {
+        if (!Array.isArray(tutorials) || tutorials.length === 0) {
+            return null;
         }
 
-        // find next day matching uploadDays and set time
-        for (let i = 0; i <= 14; i++) {
-            const nextDate = new Date(today);
-            nextDate.setDate(today.getDate() + i);
-            if (uploadDays.includes(nextDate.getDay())) {
-                nextDate.setHours(uploadHour, uploadMinute, 0, 0);
-                if (nextDate > today) return nextDate;
-            }
-        }
-        // fallback tomorrow at 10:30
-        const fallback = new Date(today);
-        fallback.setDate(today.getDate() + 1);
-        fallback.setHours(uploadHour, uploadMinute, 0, 0);
-        return fallback;
-    }
-
-    function getNextUploadDateOldSchedule() {
-        const today = new Date();
-        const lastUpload = getLastUploadFromTutorials();
-        if (lastUpload && lastUpload.uploadTime) {
-            const fifteenHoursAfterUpload = new Date(lastUpload.uploadTime.getTime() + (15 * 60 * 60 * 1000));
-            if (today < fifteenHoursAfterUpload) return fifteenHoursAfterUpload;
+        const topTutorial = tutorials[0]; // Always use the top tutorial
+        if (!topTutorial.date) {
+            return null;
         }
 
-        const uploadSchedule = [
-            // September 2025
-            new Date(2025, 8, 12), new Date(2025, 8, 13), new Date(2025, 8, 15),
-            new Date(2025, 8, 16), new Date(2025, 8, 18), new Date(2025, 8, 19),
-            new Date(2025, 8, 27), new Date(2025, 8, 28), new Date(2025, 8, 30),
-            // October 2025
-            new Date(2025, 9, 1), new Date(2025, 9, 3), new Date(2025, 9, 4),
-            new Date(2025, 9, 6), new Date(2025, 9, 7), new Date(2025, 9, 9),
-            new Date(2025, 9, 10), new Date(2025, 9, 12), new Date(2025, 9, 13),
-            new Date(2025, 9, 15), new Date(2025, 9, 16), new Date(2025, 9, 18)
-        ];
-
-        for (let d of uploadSchedule) {
-            const uploadDateTime = new Date(d);
-            uploadDateTime.setHours(10, 30, 0, 0);
-            if (uploadDateTime > today) return uploadDateTime;
-        }
-        // fallback to new schedule if none left
-        return getNextUploadDateNewSchedule();
-    }
-
-    function getLastUploadFromTutorials() {
-        const now = new Date();
-        if (!Array.isArray(tutorials) || tutorials.length === 0) return null;
-
-        const uploadedTutorials = tutorials.filter(t => t.link && t.link.trim() !== '' && t.date && t.date !== 'Coming soon');
-
-        let latestTutorial = null;
-        let latestDate = null;
-
-        for (let t of uploadedTutorials) {
-            const d = parseUploadDate(t.date);
-            if (d && d <= now) {
-                if (!latestDate || d > latestDate) {
-                    latestDate = d;
-                    latestTutorial = t;
-                }
-            }
+        const tutorialDate = parseUploadDate(topTutorial.date);
+        if (!tutorialDate) {
+            return null;
         }
 
-        if (latestTutorial && latestDate) {
-            const uploadTime = new Date(latestDate);
-            uploadTime.setHours(10, 30, 0, 0);
-            return { tutorial: latestTutorial, uploadTime };
-        }
-        return null;
+        // Set upload time to 10:30 AM local time
+        const uploadTime = new Date(tutorialDate);
+        uploadTime.setHours(10, 30, 0, 0);
+        
+        return {
+            date: uploadTime,
+            tutorial: topTutorial
+        };
     }
 
     function parseUploadDate(dateString) {
@@ -336,7 +271,9 @@ function initCountdownTimer() {
                 const day = parseInt(parts[0], 10);
                 const month = getMonthNumber(parts[1]);
                 const year = parseInt(parts[2], 10);
-                if (!isNaN(day) && month !== -1 && !isNaN(year)) return new Date(year, month, day);
+                if (!isNaN(day) && month !== -1 && !isNaN(year)) {
+                    return new Date(year, month, day);
+                }
             }
         } catch (e) {
             console.error('Error parsing date:', dateString, e);
@@ -351,155 +288,130 @@ function initCountdownTimer() {
         return months.indexOf(key);
     }
 
-    function getWatchNowTutorial() {
-        const now = new Date();
-        const lastUpload = getLastUploadFromTutorials();
-        if (!lastUpload) return null;
-        const fifteenHoursAfterUpload = new Date(lastUpload.uploadTime.getTime() + (15 * 60 * 60 * 1000));
-        return now < fifteenHoursAfterUpload ? lastUpload.tutorial : null;
-    }
-
-    function getNextUploadDatesPreview() {
-        const today = new Date();
-        const isNewSchedule = today >= scheduleChangeDate;
-        const nextDates = [];
-        if (isNewSchedule) {
-            const uploadDays = [1,3,5];
-            for (let i=0; nextDates.length < 3 && i < 21; i++) {
-                const d = new Date(today);
-                d.setDate(today.getDate() + i);
-                if (uploadDays.includes(d.getDay())) {
-                    d.setHours(10,30,0,0);
-                    if (d > today) nextDates.push(d);
-                }
-            }
-        } else {
-            // use the same schedule array as above
-            const schedule = [
-                new Date(2025,8,12), new Date(2025,8,13), new Date(2025,8,15),
-                new Date(2025,8,16), new Date(2025,8,18), new Date(2025,8,19),
-                new Date(2025,8,27), new Date(2025,8,28), new Date(2025,8,30),
-                new Date(2025,9,1), new Date(2025,9,3), new Date(2025,9,4),
-                new Date(2025,9,6), new Date(2025,9,7), new Date(2025,9,9),
-                new Date(2025,9,10), new Date(2025,9,12), new Date(2025,9,13),
-                new Date(2025,9,15), new Date(2025,9,16), new Date(2025,9,18)
-            ];
-            for (let d of schedule) {
-                const dt = new Date(d);
-                dt.setHours(10,30,0,0);
-                if (dt > today && nextDates.length < 3) nextDates.push(dt);
-            }
-            if (nextDates.length < 3 && today >= new Date(2025,9,15)) {
-                nextDates.push(...getNewScheduleDates().slice(0, 3 - nextDates.length));
-            }
-        }
-        return nextDates;
-    }
-
-    function getNewScheduleDates() {
-        const today = new Date();
-        const uploadDays = [1,3,5];
-        const dates = [];
-        for (let i=0; dates.length < 3 && i < 21; i++) {
-            const d = new Date(today);
-            d.setDate(today.getDate() + i);
-            if (uploadDays.includes(d.getDay())) {
-                d.setHours(10,30,0,0);
-                if (d > today) dates.push(d);
-            }
-        }
-        return dates;
+    function formatTime(ms) {
+        const isNegative = ms < 0;
+        const absMs = Math.abs(ms);
+        
+        const days = Math.floor(absMs / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((absMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((absMs % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((absMs % (1000 * 60)) / 1000);
+        
+        return {
+            days: (isNegative ? '-' : '') + String(days).padStart(2, '0'),
+            hours: String(hours).padStart(2, '0'),
+            minutes: String(minutes).padStart(2, '0'),
+            seconds: String(seconds).padStart(2, '0'),
+            isNegative: isNegative
+        };
     }
 
     function updateCountdown() {
-        const nextUploadDate = getNextUploadDate();
-        const now = new Date();
-        if (!nextUploadDate || isNaN(nextUploadDate.getTime())) {
-            countdownContainer.innerHTML = `<p>No upcoming uploads scheduled.</p>`;
+        const currentTutorial = getCurrentTutorial();
+        
+        if (!currentTutorial) {
+            countdownContainer.innerHTML = `
+                <h3 class="countdown-title">No Tutorial Scheduled</h3>
+                <p style="color: var(--secondary);">Check back later for new content!</p>
+            `;
             return;
         }
 
-        const distance = nextUploadDate.getTime() - now.getTime();
-        const watchNowTutorial = getWatchNowTutorial();
+        const now = new Date();
+        const distance = currentTutorial.date - now;
+        const time = formatTime(distance);
+        
+        const hasLink = currentTutorial.tutorial.link && currentTutorial.tutorial.link.trim() !== '';
+        const isWatchNowPeriod = distance <= 0 && distance > -15 * 60 * 60 * 1000; // 15 hours after 10:30 AM
+        const isAfterWatchPeriod = distance <= -15 * 60 * 60 * 1000; // More than 15 hours past 10:30 AM
 
-        if (watchNowTutorial && watchNowTutorial.link) {
-            const lastUpload = getLastUploadFromTutorials();
-            const fifteenHoursAfterUpload = lastUpload ? new Date(lastUpload.uploadTime.getTime() + (15 * 60 * 60 * 1000)) : null;
-            let timeUntilCountdown = fifteenHoursAfterUpload ? (fifteenHoursAfterUpload.getTime() - now.getTime()) : 0;
-            if (timeUntilCountdown < 0) timeUntilCountdown = 0;
-            const hoursLeft = Math.floor(timeUntilCountdown / (1000 * 60 * 60));
-            const minutesLeft = Math.floor((timeUntilCountdown % (1000 * 60 * 60)) / (1000 * 60));
-
+        // Check if there's a NEW tutorial (different date) after watch period
+        if (isAfterWatchPeriod && hasLink) {
+            // Check if this is still the most recent tutorial or if there's a newer one
+            const nextTutorial = getCurrentTutorial(); // This will get the current top tutorial
+            
+            // If we're still showing the same tutorial that's past its watch period
+            // and it has a link, keep showing "Watch Now"
+            countdownContainer.innerHTML = `
+                <h3 class="countdown-title">🎉 Tutorial Available!</h3>
+                <a href="${currentTutorial.tutorial.link}" class="btn btn-primary" style="margin-top: 20px;" target="_blank">
+                    <i class="fas fa-play"></i> Watch Now
+                </a>
+                <div class="upcoming-tutorial" style="margin-top: 15px;">
+                    ${currentTutorial.tutorial.title || 'TBA'}
+                </div>
+            `;
+            
+        } else if (isWatchNowPeriod && hasLink) {
+            // Watch Now period (15 hours after upload time)
+            const timeLeftInWatchPeriod = -distance; // Convert to positive
+            const hoursLeft = Math.floor(timeLeftInWatchPeriod / (1000 * 60 * 60));
+            const minutesLeft = Math.floor((timeLeftInWatchPeriod % (1000 * 60 * 60)) / (1000 * 60));
+            
             countdownContainer.innerHTML = `
                 <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
-                <a href="${watchNowTutorial.link}" class="btn btn-primary" style="margin-top: 20px;">
+                <a href="${currentTutorial.tutorial.link}" class="btn btn-primary" style="margin-top: 20px;" target="_blank">
                     <i class="fas fa-play"></i> Watch Now
                 </a>
                 <div style="margin-top: 10px; font-size: 0.8rem; color: var(--secondary);">
-                    Next countdown starts in: ${hoursLeft}h ${minutesLeft}m
+                    Watch period ends in: ${hoursLeft}h ${minutesLeft}m
                 </div>
             `;
         } else {
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            const nextUploadFormatted = nextUploadDate.toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            const nextDates = getNextUploadDatesPreview();
-            let schedulePreview = '';
-            if (nextDates.length > 1) {
-                const previewDates = nextDates.slice(1, 3).map(date =>
-                    date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-                ).join(' & ');
-                schedulePreview = `<br><small>Next: ${previewDates}</small>`;
+            // Countdown mode (before upload OR no link during watch period)
+            let title = 'Next Tutorial In:';
+            let showWatchButton = false;
+            
+            if (time.isNegative) {
+                if (hasLink) {
+                    title = 'Tutorial Available!';
+                    showWatchButton = true;
+                } else {
+                    title = 'Waiting For Upload:';
+                }
             }
-
-            const upcomingTutorialTitle = Array.isArray(tutorials) && tutorials.length > 0 ? tutorials[0].title : 'TBA';
-
+            
             countdownContainer.innerHTML = `
-                <h3 class="countdown-title">Next Tutorial In:</h3>
+                <h3 class="countdown-title">${title}</h3>
                 <div class="countdown-timer">
                     <div class="countdown-item">
-                        <div class="countdown-number" id="days">${String(days).padStart(2,'0')}</div>
+                        <div class="countdown-number ${time.isNegative ? 'negative' : ''}" id="days">${time.days}</div>
                         <div class="countdown-label">Days</div>
                     </div>
                     <div class="countdown-item">
-                        <div class="countdown-number" id="hours">${String(hours).padStart(2,'0')}</div>
+                        <div class="countdown-number ${time.isNegative ? 'negative' : ''}" id="hours">${time.hours}</div>
                         <div class="countdown-label">Hrs</div>
                     </div>
                     <div class="countdown-item">
-                        <div class="countdown-number" id="minutes">${String(minutes).padStart(2,'0')}</div>
+                        <div class="countdown-number ${time.isNegative ? 'negative' : ''}" id="minutes">${time.minutes}</div>
                         <div class="countdown-label">Mins</div>
                     </div>
                     <div class="countdown-item">
-                        <div class="countdown-number" id="seconds">${String(seconds).padStart(2,'0')}</div>
+                        <div class="countdown-number ${time.isNegative ? 'negative' : ''}" id="seconds">${time.seconds}</div>
                         <div class="countdown-label">Secs</div>
                     </div>
                 </div>
                 <div class="upcoming-tutorial">
-                    ${upcomingTutorialTitle}
+                    ${currentTutorial.tutorial.title || 'TBA'}
                 </div>
+                ${showWatchButton ? `
+                    <a href="${currentTutorial.tutorial.link}" class="btn btn-primary" style="margin-top: 15px;" target="_blank">
+                        <i class="fas fa-play"></i> Watch Tutorial
+                    </a>
+                ` : ''}
             `;
-
-            // Add click + hover if link exists
-            const newUpcomingElement = countdownContainer.querySelector('.upcoming-tutorial');
-            if (newUpcomingElement && Array.isArray(tutorials) && tutorials.length > 0 && tutorials[0].link) {
-                newUpcomingElement.style.cursor = 'pointer';
-                newUpcomingElement.onclick = () => window.open(tutorials[0].link, '_blank');
-                newUpcomingElement.style.transition = 'all 0.3s ease';
-                newUpcomingElement.addEventListener('mouseenter', function() {
+            
+            // Make upcoming tutorial clickable if link exists
+            const upcomingElement = countdownContainer.querySelector('.upcoming-tutorial');
+            if (upcomingElement && hasLink) {
+                upcomingElement.style.cursor = 'pointer';
+                upcomingElement.onclick = () => window.open(currentTutorial.tutorial.link, '_blank');
+                upcomingElement.style.transition = 'all 0.3s ease';
+                upcomingElement.addEventListener('mouseenter', function() {
                     this.style.transform = 'scale(1.02)';
                     this.style.boxShadow = '0 10px 40px rgba(255, 42, 109, 0.3)';
                 });
-                newUpcomingElement.addEventListener('mouseleave', function() {
+                upcomingElement.addEventListener('mouseleave', function() {
                     this.style.transform = 'scale(1)';
                     this.style.boxShadow = '0 10px 30px rgba(255, 42, 109, 0.1)';
                 });
@@ -507,12 +419,81 @@ function initCountdownTimer() {
         }
     }
 
-    // initial + interval
+    // Add CSS for negative numbers
+    if (!document.querySelector('#countdown-styles')) {
+        const style = document.createElement('style');
+        style.id = 'countdown-styles';
+        style.textContent = `
+            .countdown-number.negative {
+                color: #ff4444 !important;
+                text-shadow: 0 0 10px rgba(255, 68, 68, 0.5) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Initial update and set interval
     updateCountdown();
-    // clear any existing interval? We'll attach a single interval via closure
     if (initCountdownTimer._intervalId) clearInterval(initCountdownTimer._intervalId);
     initCountdownTimer._intervalId = setInterval(updateCountdown, 1000);
 }
+
+// Auto badge logic that updates dynamically based on date/time and tutorial order
+function autoUpdateBadges() {
+    if (!Array.isArray(tutorials) || tutorials.length < 3) return;
+
+    // Helper: parse "7 Oct 2025" into a Date object at 10:30 AM
+    function parseUploadDate(dateStr) {
+        if (!dateStr) return null;
+        const parts = dateStr.trim().split(' ');
+        if (parts.length !== 3) return null;
+        const day = parseInt(parts[0], 10);
+        const monthMap = {
+            jan:0,feb:1,mar:2,apr:3,may:4,jun:5,
+            jul:6,aug:7,sep:8,oct:9,nov:10,dec:11
+        };
+        const month = monthMap[parts[1].substring(0,3).toLowerCase()] || 0;
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day, 10, 30, 0, 0); // upload time = 10:30 AM
+    }
+
+    const now = new Date();
+
+    const top = tutorials[0];
+    const second = tutorials[1];
+    const third = tutorials[2];
+
+    const topTime = parseUploadDate(top.date);
+    if (!topTime) return;
+
+    const timeDiff = now - topTime;
+
+    // Badge rules:
+    // -------------------------------------------
+    // Before 10:30 AM on top tutorial's date
+    if (timeDiff < 0) {
+        top.badge = "up coming";
+        second.badge = "out now";
+        third.badge = "new";
+    }
+    // Between 10:30 AM and +15 hours (1:30 AM next day)
+    else if (timeDiff >= 0 && timeDiff <= 15 * 60 * 60 * 1000) {
+        top.badge = "out now";
+        second.badge = "new";
+        delete third.badge;
+    }
+    // After 15 hours have passed
+    else {
+        top.badge = "out now";
+        second.badge = "new";
+        delete third.badge;
+    }
+    setInterval(() => {
+    autoUpdateBadges();
+    displayTutorials(currentPage);
+}, 60 * 1000);
+}
+
 
 // Back to Top Button Functionality
 function initBackToTop() {
