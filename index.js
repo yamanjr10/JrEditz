@@ -354,7 +354,6 @@ function initCountdownTimer() {
                     <i class="fas fa-play"></i> Watch Now
                 </a>
                 <div style="margin-top: 10px; font-size: 0.8rem; color: var(--secondary);">
-                    Watch period ends in: ${hoursLeft}h ${minutesLeft}m
                 </div>
             `;
         } else {
