@@ -333,12 +333,11 @@ function initCountdownTimer() {
             // If we're still showing the same tutorial that's past its watch period
             // and it has a link, keep showing "Watch Now"
             countdownContainer.innerHTML = `
-                <h3 class="countdown-title">🎉 Tutorial Available!</h3>
+                  <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
                 <a href="${currentTutorial.tutorial.link}" class="btn btn-primary" style="margin-top: 20px;" target="_blank">
                     <i class="fas fa-play"></i> Watch Now
                 </a>
-                <div class="upcoming-tutorial" style="margin-top: 15px;">
-                    ${currentTutorial.tutorial.title || 'TBA'}
+                <div style="margin-top: 10px; font-size: 0.8rem; color: var(--secondary);">
                 </div>
             `;
             
