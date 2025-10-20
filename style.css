@@ -347,47 +347,82 @@
      font-size: 0.9rem;
  }
 
- /* Pagination */
- .pagination-container {
-    margin-top: 30px;
+/* Pagination Outer Container */
+.pagination-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding: 30px 0;
 }
 
+/* Inner pagination flex wrapper */
 .pagination {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
+/* Pagination Buttons */
 .pagination-btn {
-    padding: 8px 15px;
-    background: var(--gray);
-    color: var(--light);
-    border: 1px solid var(--primary);
-    border-radius: 5px;
+    background: #2c2f3a;         /* dark card tone */
+    color: #b0b3c1;              /* muted gray text */
+    border: none;
+    border-radius: 12px;         /* round edges like your image */
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.pagination-btn:hover {
-    background: var(--primary);
-    color: white;
+.pagination-btn:hover:not(.disabled):not(.active) {
+    background: #3a3f4b;
+    color: #ffffff;
 }
 
+/* Active page button */
 .pagination-btn.active {
-    background: var(--primary);
-    color: white;
+    background: #ff2a6d; /* accent color */
+    color: #fff;
 }
 
+/* Disabled states */
 .pagination-btn.disabled {
-    opacity: 0.5;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
-.pagination-btn.disabled:hover {
-    background: var(--gray);
-    color: var(--light);
+/* Ellipsis styling */
+.pagination-ellipsis {
+    color: #7f8490;
+    padding: 0 6px;
+    font-size: 16px;
 }
+
+/* Optional subtle hover lift */
+.pagination-btn:not(.disabled):hover {
+    transform: translateY(-1px);
+}
+
+/* Responsive: wrap or shrink gracefully */
+@media (max-width: 500px) {
+    .pagination {
+        gap: 4px;
+    }
+    .pagination-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+}
+
 
  /* Resources Section */
  .resources {

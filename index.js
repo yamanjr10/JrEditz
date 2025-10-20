@@ -38,14 +38,11 @@ async function loadTutorials() {
 }
 
 }
-
-// Generate Tutorials Section with pagination
+// === DISPLAY TUTORIALS ===
 function displayTutorials(page = 1) {
-    if (!tutorialsContainer) {
-        console.warn('No tutorials container found in DOM.');
-        return;
-    }
+    if (!tutorialsContainer) return;
 
+    // Empty or loading state
     if (!Array.isArray(tutorials) || tutorials.length === 0) {
         tutorialsContainer.innerHTML = `
             <h2 class="section-title">Latest <span>Tutorials</span></h2>
@@ -57,10 +54,12 @@ function displayTutorials(page = 1) {
         return;
     }
 
+    // Pagination logic
     const startIndex = (page - 1) * tutorialsPerPage;
     const endIndex = startIndex + tutorialsPerPage;
     const paginatedTutorials = tutorials.slice(startIndex, endIndex);
-    
+
+    // Build HTML
     let tutorialsHTML = `
         <h2 class="section-title">Latest <span>Tutorials</span></h2>
         <div class="video-container">
@@ -71,12 +70,15 @@ function displayTutorials(page = 1) {
         const safeThumb = tutorial.thumbnail || '';
         const safeLink = tutorial.link || '#';
         const badgeClass = tutorial.badge ? tutorial.badge.replace(/\s+/g, '-') : '';
-        const badgeHTML = tutorial.badge ? `<div class="video-badge ${badgeClass}">${tutorial.badge}</div>` : '';
+        const badgeHTML = tutorial.badge
+            ? `<div class="video-badge ${badgeClass}">${tutorial.badge}</div>`
+            : '';
 
         tutorialsHTML += `
         <div class="video-card">
             <div class="video-thumb">
-                ${safeThumb ? `<img src="${safeThumb}" alt="${safeTitle}" loading="lazy">` : `<div class="no-thumb">No image</div>`}
+                ${safeThumb ? `<img src="${safeThumb}" alt="${safeTitle}" loading="lazy">`
+                             : `<div class="no-thumb">No image</div>`}
                 ${badgeHTML}
                 <div class="play-btn">
                     <a href="${safeLink}" target="_blank" style="color: white;">
@@ -98,61 +100,85 @@ function displayTutorials(page = 1) {
     tutorialsHTML += `</div>`;
     tutorialsContainer.innerHTML = tutorialsHTML;
 
-    // Update pagination buttons
+    // Update pagination
     updatePagination();
 }
 
+// === PAGINATION UI ===
 function updatePagination() {
     if (!paginationContainer) return;
 
-    const totalPages = Math.max(1, Math.ceil((tutorials.length || 0) / tutorialsPerPage));
+    const totalPages = Math.max(1, Math.ceil(tutorials.length / tutorialsPerPage));
     let paginationHTML = '';
 
-    // Previous button
-    paginationHTML += `
-        <button class="pagination-btn ${currentPage === 1 ? 'disabled' : ''}" 
-                ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
-            <i class="fas fa-chevron-left"></i>
+    // Helper to create buttons
+    const makeBtn = (page, label, disabled = false, active = false) => `
+        <button 
+            class="pagination-btn ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}" 
+            ${disabled ? 'disabled' : ''} 
+            data-page="${page}">
+            ${label}
         </button>
     `;
 
-    // Page numbers (limit to reasonable number)
-    for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `
-            <button class="pagination-btn ${currentPage === i ? 'active' : ''}" data-page="${i}">
-                ${i}
-            </button>
-        `;
+    // First and Prev buttons
+    paginationHTML += makeBtn(1, '<i class="fas fa-angle-double-left"></i>', currentPage === 1);
+    paginationHTML += makeBtn(currentPage - 1, '<i class="fas fa-chevron-left"></i>', currentPage === 1);
+
+    // Dynamic page window
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = start + maxVisible - 1;
+    if (end > totalPages) {
+        end = totalPages;
+        start = Math.max(1, end - maxVisible + 1);
     }
 
-    // Next button
-    paginationHTML += `
-        <button class="pagination-btn ${currentPage === totalPages ? 'disabled' : ''}" 
-                ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-    `;
+    // Leading ellipsis
+    if (start > 1) {
+        paginationHTML += makeBtn(1, '1');
+        if (start > 2) paginationHTML += `<span class="pagination-ellipsis">…</span>`;
+    }
+
+    // Page numbers
+    for (let i = start; i <= end; i++) {
+        paginationHTML += makeBtn(i, i, false, currentPage === i);
+    }
+
+    // Trailing ellipsis
+    if (end < totalPages) {
+        if (end < totalPages - 1) paginationHTML += `<span class="pagination-ellipsis">…</span>`;
+        paginationHTML += makeBtn(totalPages, totalPages);
+    }
+
+    // Next and Last buttons
+    paginationHTML += makeBtn(currentPage + 1, '<i class="fas fa-chevron-right"></i>', currentPage === totalPages);
+    paginationHTML += makeBtn(totalPages, '<i class="fas fa-angle-double-right"></i>', currentPage === totalPages);
 
     paginationContainer.innerHTML = paginationHTML;
 
-    // Use event delegation so we don't attach many handlers
+    // Event Delegation
     paginationContainer.querySelectorAll('.pagination-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const targetPage = parseInt(btn.getAttribute('data-page'), 10);
-            if (!isNaN(targetPage)) changePage(targetPage);
+            if (!isNaN(targetPage) && targetPage !== currentPage) changePage(targetPage);
         });
     });
 }
 
+// === CHANGE PAGE ===
 function changePage(page) {
-    const totalPages = Math.max(1, Math.ceil((tutorials.length || 0) / tutorialsPerPage));
+    const totalPages = Math.max(1, Math.ceil(tutorials.length / tutorialsPerPage));
     if (page < 1 || page > totalPages) return;
     currentPage = page;
     displayTutorials(currentPage);
-    // Scroll to tutorials section if it exists
-    const tutorialsSection = document.getElementById('tutorials');
-    if (tutorialsSection) tutorialsSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Smooth scroll to section
+    if (tutorialsContainer) {
+        tutorialsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
+
 
 // Function to fetch latest YouTube video via serverless function
 async function fetchLatestYouTubeVideo() {
