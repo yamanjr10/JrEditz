@@ -850,7 +850,7 @@ function initScheduleCalendar() {
     }
 
     // Show current month only if desired months; else show message
-    const validMonths = [8,9,11]; // Sept, Oct, Dec
+    const validMonths = [8,9,10,11]; // Sept, Oct, Nov, Dec
     if (new Date().getFullYear() === year && validMonths.includes(new Date().getMonth())) {
         renderCalendar();
     } else {
