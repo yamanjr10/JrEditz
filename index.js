@@ -31,11 +31,11 @@ async function loadTutorials() {
         console.error('Error loading tutorials:', error);
         tutorials = [];
     } finally {
-    autoUpdateBadges();
-    if (typeof displayTutorials === 'function') displayTutorials(currentPage);
-    if (typeof initCountdownTimer === 'function') initCountdownTimer();
-    updateUpcomingTutorial();
-}
+        autoUpdateBadges();
+        if (typeof displayTutorials === 'function') displayTutorials(currentPage);
+        if (typeof initCountdownTimer === 'function') initCountdownTimer();
+        updateUpcomingTutorial();
+    }
 
 }
 // === DISPLAY TUTORIALS ===
@@ -78,7 +78,7 @@ function displayTutorials(page = 1) {
         <div class="video-card">
             <div class="video-thumb">
                 ${safeThumb ? `<img src="${safeThumb}" alt="${safeTitle}" loading="lazy">`
-                             : `<div class="no-thumb">No image</div>`}
+                : `<div class="no-thumb">No image</div>`}
                 ${badgeHTML}
                 <div class="play-btn">
                     <a href="${safeLink}" target="_blank" style="color: white;">
@@ -184,7 +184,7 @@ function changePage(page) {
 async function fetchLatestYouTubeVideo() {
     try {
         console.log('Fetching latest YouTube video...');
-        const apiUrl = window.location.hostname === 'localhost' 
+        const apiUrl = window.location.hostname === 'localhost'
             ? 'http://localhost:3000/api/latest-video'
             : '/api/latest-video';
         const response = await fetch(apiUrl);
@@ -245,11 +245,11 @@ function updateUpcomingTutorial() {
     }
     // hover effects (safe)
     upcomingTutorialElement.style.transition = 'all 0.3s ease';
-    upcomingTutorialElement.addEventListener('mouseenter', function() {
+    upcomingTutorialElement.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.02)';
         this.style.boxShadow = '0 10px 40px rgba(255, 42, 109, 0.3)';
     });
-    upcomingTutorialElement.addEventListener('mouseleave', function() {
+    upcomingTutorialElement.addEventListener('mouseleave', function () {
         this.style.transform = 'scale(1)';
         this.style.boxShadow = '0 10px 30px rgba(255, 42, 109, 0.1)';
     });
@@ -282,7 +282,7 @@ function initCountdownTimer() {
         // Set upload time to 10:30 AM local time
         const uploadTime = new Date(tutorialDate);
         uploadTime.setHours(10, 30, 0, 0);
-        
+
         return {
             date: uploadTime,
             tutorial: topTutorial
@@ -309,20 +309,20 @@ function initCountdownTimer() {
 
     function getMonthNumber(monthStr) {
         if (!monthStr) return -1;
-        const months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
-        const key = monthStr.toLowerCase().substring(0,3);
+        const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+        const key = monthStr.toLowerCase().substring(0, 3);
         return months.indexOf(key);
     }
 
     function formatTime(ms) {
         const isNegative = ms < 0;
         const absMs = Math.abs(ms);
-        
+
         const days = Math.floor(absMs / (1000 * 60 * 60 * 24));
         const hours = Math.floor((absMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((absMs % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((absMs % (1000 * 60)) / 1000);
-        
+
         return {
             days: (isNegative ? '-' : '') + String(days).padStart(2, '0'),
             hours: String(hours).padStart(2, '0'),
@@ -334,7 +334,7 @@ function initCountdownTimer() {
 
     function updateCountdown() {
         const currentTutorial = getCurrentTutorial();
-        
+
         if (!currentTutorial) {
             countdownContainer.innerHTML = `
                 <h3 class="countdown-title">No Tutorial Scheduled</h3>
@@ -346,7 +346,7 @@ function initCountdownTimer() {
         const now = new Date();
         const distance = currentTutorial.date - now;
         const time = formatTime(distance);
-        
+
         const hasLink = currentTutorial.tutorial.link && currentTutorial.tutorial.link.trim() !== '';
         const isWatchNowPeriod = distance <= 0 && distance > -15 * 60 * 60 * 1000; // 15 hours after 10:30 AM
         const isAfterWatchPeriod = distance <= -15 * 60 * 60 * 1000; // More than 15 hours past 10:30 AM
@@ -355,7 +355,7 @@ function initCountdownTimer() {
         if (isAfterWatchPeriod && hasLink) {
             // Check if this is still the most recent tutorial or if there's a newer one
             const nextTutorial = getCurrentTutorial(); // This will get the current top tutorial
-            
+
             // If we're still showing the same tutorial that's past its watch period
             // and it has a link, keep showing "Watch Now"
             countdownContainer.innerHTML = `
@@ -366,13 +366,13 @@ function initCountdownTimer() {
                 <div style="margin-top: 10px; font-size: 0.8rem; color: var(--secondary);">
                 </div>
             `;
-            
+
         } else if (isWatchNowPeriod && hasLink) {
             // Watch Now period (15 hours after upload time)
             const timeLeftInWatchPeriod = -distance; // Convert to positive
             const hoursLeft = Math.floor(timeLeftInWatchPeriod / (1000 * 60 * 60));
             const minutesLeft = Math.floor((timeLeftInWatchPeriod % (1000 * 60 * 60)) / (1000 * 60));
-            
+
             countdownContainer.innerHTML = `
                 <h3 class="countdown-title">🎉 New Tutorial Available Now!</h3>
                 <a href="${currentTutorial.tutorial.link}" class="btn btn-primary" style="margin-top: 20px;" target="_blank">
@@ -385,7 +385,7 @@ function initCountdownTimer() {
             // Countdown mode (before upload OR no link during watch period)
             let title = 'Next Tutorial In:';
             let showWatchButton = false;
-            
+
             if (time.isNegative) {
                 if (hasLink) {
                     title = 'Tutorial Available!';
@@ -394,7 +394,7 @@ function initCountdownTimer() {
                     title = 'Waiting For Upload:';
                 }
             }
-            
+
             countdownContainer.innerHTML = `
                 <h3 class="countdown-title">${title}</h3>
                 <div class="countdown-timer">
@@ -424,18 +424,18 @@ function initCountdownTimer() {
                     </a>
                 ` : ''}
             `;
-            
+
             // Make upcoming tutorial clickable if link exists
             const upcomingElement = countdownContainer.querySelector('.upcoming-tutorial');
             if (upcomingElement && hasLink) {
                 upcomingElement.style.cursor = 'pointer';
                 upcomingElement.onclick = () => window.open(currentTutorial.tutorial.link, '_blank');
                 upcomingElement.style.transition = 'all 0.3s ease';
-                upcomingElement.addEventListener('mouseenter', function() {
+                upcomingElement.addEventListener('mouseenter', function () {
                     this.style.transform = 'scale(1.02)';
                     this.style.boxShadow = '0 10px 40px rgba(255, 42, 109, 0.3)';
                 });
-                upcomingElement.addEventListener('mouseleave', function() {
+                upcomingElement.addEventListener('mouseleave', function () {
                     this.style.transform = 'scale(1)';
                     this.style.boxShadow = '0 10px 30px rgba(255, 42, 109, 0.1)';
                 });
@@ -473,10 +473,10 @@ function autoUpdateBadges() {
         if (parts.length !== 3) return null;
         const day = parseInt(parts[0], 10);
         const monthMap = {
-            jan:0,feb:1,mar:2,apr:3,may:4,jun:5,
-            jul:6,aug:7,sep:8,oct:9,nov:10,dec:11
+            jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+            jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
         };
-        const month = monthMap[parts[1].substring(0,3).toLowerCase()] || 0;
+        const month = monthMap[parts[1].substring(0, 3).toLowerCase()] || 0;
         const year = parseInt(parts[2], 10);
         return new Date(year, month, day, 10, 30, 0, 0); // upload time = 10:30 AM
     }
@@ -513,9 +513,9 @@ function autoUpdateBadges() {
         delete third.badge;
     }
     setInterval(() => {
-    autoUpdateBadges();
-    displayTutorials(currentPage);
-}, 60 * 1000);
+        autoUpdateBadges();
+        displayTutorials(currentPage);
+    }, 60 * 1000);
 }
 
 
@@ -730,6 +730,9 @@ function initScheduleCalendar() {
     const cycle = ['upload', 'upload', 'break'];
     const longBreakStart = new Date(year, 8, 21);
     const longBreakEnd = new Date(year, 8, 26);
+    const specialBreakStart = new Date(2025, 10, 23); // 23 Nov 2025 (month 10)
+    const specialBreakEnd = new Date(2025, 10, 29); // 29 Nov 2025
+
     const today = new Date();
 
     let currentMonth = today.getMonth();
@@ -792,6 +795,15 @@ function initScheduleCalendar() {
                         cellClass = "today";
                     }
 
+                    if (currentDay >= specialBreakStart && currentDay <= specialBreakEnd) {
+                        content += `<span class="event break">Break</span>`;
+                        hasUploadEvent = true;
+
+                        html += `<td class="${cellClass}">${content}</td>`;
+                        day++;
+                        continue;
+                    }
+
                     // Add event if after start date
                     if (currentDay >= startDate) {
                         if (currentDay < newScheduleStartDate) {
@@ -850,7 +862,7 @@ function initScheduleCalendar() {
     }
 
     // Show current month only if desired months; else show message
-    const validMonths = [8,9,10,11]; // Sept, Oct, Nov, Dec
+    const validMonths = [8, 9, 10, 11]; // Sept, Oct, Nov, Dec
     if (new Date().getFullYear() === year && validMonths.includes(new Date().getMonth())) {
         renderCalendar();
     } else {
@@ -933,7 +945,7 @@ function initScrollAnimations() {
 }
 
 // Initialize all features when DOM loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Cache commonly used elements (safe)
     tutorialsContainer = document.getElementById("tutorials-container");
     paginationContainer = document.getElementById("pagination");
