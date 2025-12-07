@@ -279,9 +279,9 @@ function initCountdownTimer() {
             return null;
         }
 
-        // Set upload time to 10:30 AM local time
+        // Set upload time to 5:00 PM local time
         const uploadTime = new Date(tutorialDate);
-        uploadTime.setHours(10, 30, 0, 0);
+        uploadTime.setHours(17, 0, 0, 0);
 
         return {
             date: uploadTime,
@@ -348,8 +348,8 @@ function initCountdownTimer() {
         const time = formatTime(distance);
 
         const hasLink = currentTutorial.tutorial.link && currentTutorial.tutorial.link.trim() !== '';
-        const isWatchNowPeriod = distance <= 0 && distance > -15 * 60 * 60 * 1000; // 15 hours after 10:30 AM
-        const isAfterWatchPeriod = distance <= -15 * 60 * 60 * 1000; // More than 15 hours past 10:30 AM
+        const isWatchNowPeriod = distance <= 0 && distance > -15 * 60 * 60 * 1000; // 15 hours after 5:00 PM
+        const isAfterWatchPeriod = distance <= -15 * 60 * 60 * 1000; // More than 15 hours past 5:00 PM
 
         // Check if there's a NEW tutorial (different date) after watch period
         if (isAfterWatchPeriod && hasLink) {
@@ -478,7 +478,7 @@ function autoUpdateBadges() {
         };
         const month = monthMap[parts[1].substring(0, 3).toLowerCase()] || 0;
         const year = parseInt(parts[2], 10);
-        return new Date(year, month, day, 10, 30, 0, 0); // upload time = 10:30 AM
+        return new Date(year, month, day, 17, 0, 0, 0); // upload time = 5:00 PM
     }
 
     const now = new Date();
@@ -494,19 +494,19 @@ function autoUpdateBadges() {
 
     // Badge rules:
     // -------------------------------------------
-    // Before 10:30 AM on top tutorial's date
+    // Before 5:00 PM on top tutorial's date
     if (timeDiff < 0) {
         top.badge = "up coming";
         second.badge = "out now";
         third.badge = "new";
     }
-    // Between 10:30 AM and +15 hours (1:30 AM next day)
+    // Between 5:00 PM and +15 hours (8:00 AM next day)
     else if (timeDiff >= 0 && timeDiff <= 15 * 60 * 60 * 1000) {
         top.badge = "out now";
         second.badge = "new";
         delete third.badge;
     }
-    // After 15 hours have passed
+    // After 15 hours have passed (after 8:00 AM next day)
     else {
         top.badge = "out now";
         second.badge = "new";
